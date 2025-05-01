@@ -1,0 +1,34 @@
+@model NewProductViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card p-4">
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Price)
+            @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "number", step = "0.01" })
+            @Html.ValidationMessageFor(m => m.Price)
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(m => m.CategoryId)
+            @Html.DropDownListFor(m => m.CategoryId, Model.Categories, "Select a category", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.CategoryId)
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="@Url.Action("Index", "Product")" class="btn btn-secondary ms-2">Cancel</a>
+    </div>
+}

@@ -1,0 +1,12 @@
+@model Product
+
+<div class="card h-100 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">
+            Price: @Model.Price <br />
+            In Stock: @Model.QuantityInStock <br />
+            Category: @Model.Category?.Name
+        </p>
+    </div>
+</div>

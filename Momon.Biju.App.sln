@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Momon.Biju.Web", "Momon.Biju.Web\Momon.Biju.Web.csproj", "{FE1C3791-551C-4D5B-BA15-DDBC61106FFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Presentation", "1 - Presentation", "{EA48A2CD-5475-4468-8C6F-E031F8528BD9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Core", "2 - Core", "{93E7D655-B114-4139-8AB5-A216661882E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Infra", "3 - Infra", "{ADE1CF29-A511-43CF-AD69-CDBC3BF05B1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Momon.Biju.App.Domain", "Momon.Biju.App.Domain\Momon.Biju.App.Domain.csproj", "{C325ACB1-8FCF-46D7-8AE7-AC4BC429D6DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Momon.Biju.App.Infra", "Momon.Biju.App.Infra\Momon.Biju.App.Infra.csproj", "{48153DD7-4848-4A29-BCBB-622AFD0E38FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Momon.Biju.App.Application", "Momon.Biju.App.Application\Momon.Biju.App.Application.csproj", "{7D875420-C4C2-44D3-BE60-F7C2C2F35C8B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE1C3791-551C-4D5B-BA15-DDBC61106FFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE1C3791-551C-4D5B-BA15-DDBC61106FFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE1C3791-551C-4D5B-BA15-DDBC61106FFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE1C3791-551C-4D5B-BA15-DDBC61106FFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C325ACB1-8FCF-46D7-8AE7-AC4BC429D6DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C325ACB1-8FCF-46D7-8AE7-AC4BC429D6DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C325ACB1-8FCF-46D7-8AE7-AC4BC429D6DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C325ACB1-8FCF-46D7-8AE7-AC4BC429D6DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48153DD7-4848-4A29-BCBB-622AFD0E38FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48153DD7-4848-4A29-BCBB-622AFD0E38FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48153DD7-4848-4A29-BCBB-622AFD0E38FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48153DD7-4848-4A29-BCBB-622AFD0E38FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D875420-C4C2-44D3-BE60-F7C2C2F35C8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D875420-C4C2-44D3-BE60-F7C2C2F35C8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D875420-C4C2-44D3-BE60-F7C2C2F35C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D875420-C4C2-44D3-BE60-F7C2C2F35C8B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FE1C3791-551C-4D5B-BA15-DDBC61106FFA} = {EA48A2CD-5475-4468-8C6F-E031F8528BD9}
+		{C325ACB1-8FCF-46D7-8AE7-AC4BC429D6DC} = {93E7D655-B114-4139-8AB5-A216661882E8}
+		{48153DD7-4848-4A29-BCBB-622AFD0E38FD} = {ADE1CF29-A511-43CF-AD69-CDBC3BF05B1D}
+		{7D875420-C4C2-44D3-BE60-F7C2C2F35C8B} = {93E7D655-B114-4139-8AB5-A216661882E8}
+	EndGlobalSection
+EndGlobal
