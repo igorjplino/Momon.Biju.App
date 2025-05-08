@@ -5,27 +5,30 @@ using Momon.Biju.App.Domain.Interfaces.Repositories;
 
 namespace Momon.Biju.App.Application.EntitiesActions.Produtcs.Commands;
 
-public record CreateProductCommand(
+public record UpdateProductCommand(
+    Guid ProductId,
     string Name,
     string Price,
     Guid CategoryId,
     IEnumerable<Guid> SubCategories)
-    : IRequest<Result<Guid>>
-{ }
+    : IRequest<Result<Product>>
+{
+}
 
-public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Result<Guid>>
+public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Result<Product>>
 {
     private readonly IProductRepository _productRepository;
 
-    public CreateProductCommandHandler(IProductRepository productRepository)
+    public UpdateProductCommandHandler(IProductRepository productRepository)
     {
         _productRepository = productRepository;
     }
 
-    public async Task<Result<Guid>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Product>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
         var product = new Product
         {
+            Id = request.ProductId,
             Name = request.Name,
             Price = Math.Round(decimal.Parse(request.Price), 2),
             CategoryId = request.CategoryId,
@@ -35,6 +38,8 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             })
         };
         
-        return await _productRepository.CreateAsync(product);
+        await _productRepository.UpdateAsync(product);
+        
+        return product;
     }
 }

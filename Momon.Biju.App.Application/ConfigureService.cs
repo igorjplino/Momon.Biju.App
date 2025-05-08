@@ -21,6 +21,7 @@ public static class ConfigureService
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 
             cfg.AddValidationBehavior<CreateProductCommand, Guid>();
+            cfg.AddValidationBehavior<UpdateProductCommand, bool>();
         });
         
         return services;

@@ -23,9 +23,13 @@
         </div>
 
         <div class="mb-3">
-            @Html.LabelFor(m => m.CategoryId)
-            @Html.DropDownListFor(m => m.CategoryId, Model.Categories, "Select a category", new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.CategoryId)
+            @Html.LabelFor(m => m.SelectedCategoryId, "Category")
+            @Html.DropDownListFor(m => m.SelectedCategoryId, Model.Categories, "Select Category", new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.SelectedSubCategoriesId, "Subcategories")
+            @Html.ListBoxFor(m => m.SelectedSubCategoriesId, Model.SubCategories, new { @class = "form-control", size = 6 })
         </div>
 
         <button type="submit" class="btn btn-primary">Save</button>

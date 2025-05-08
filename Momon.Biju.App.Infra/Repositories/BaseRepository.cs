@@ -44,4 +44,10 @@ public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         await Context.Set<T>().Where(x => x.Id == id).ExecuteDeleteAsync();
     }
+    
+    public async Task UpdateAsync(T entity)
+    {
+        Context.Set<T>().Update(entity);
+        await Context.SaveChangesAsync();
+    }
 }

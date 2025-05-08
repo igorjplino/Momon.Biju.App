@@ -87,4 +87,9 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
 
         return (products, total);
     }
+
+    public Task<Product?> GetByNameAsync(string name)
+    {
+        throw new NotImplementedException();
+    }
 }

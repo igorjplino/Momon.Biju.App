@@ -1,6 +1,6 @@
 namespace Momon.Biju.Web.Models;
 
-public class Product
+public class ProductDto
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

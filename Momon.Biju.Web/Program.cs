@@ -1,3 +1,5 @@
+using System.Globalization;
+using FluentValidation;
 using Momon.Biju.App.Application;
 using Momon.Biju.App.Domain.Model;
 using Momon.Biju.App.Infra;
@@ -14,6 +16,8 @@ builder.Services.Configure<Connections>(builder.Configuration.GetSection("Connec
 builder.Services.AddMvc()
     .AddRazorRuntimeCompilation();
 
+CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("pt-BR");
+ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("pt-BR");
 
 var app = builder.Build();
 
