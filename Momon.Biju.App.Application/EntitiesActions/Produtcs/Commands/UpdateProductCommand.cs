@@ -35,7 +35,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
             SubCategories = request.SubCategories.Select(x => new ProductSubCategory
             {
                 SubCategoryId = x
-            })
+            }).ToList()
         };
         
         await _productRepository.UpdateAsync(product);

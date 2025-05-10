@@ -7,6 +7,7 @@ namespace Momon.Biju.App.Application.EntitiesActions.Produtcs.Commands;
 
 public record CreateProductCommand(
     string Name,
+    string Description,
     string Price,
     Guid CategoryId,
     IEnumerable<Guid> SubCategories)
@@ -27,12 +28,13 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         var product = new Product
         {
             Name = request.Name,
+            Description = request.Description,
             Price = Math.Round(decimal.Parse(request.Price), 2),
             CategoryId = request.CategoryId,
             SubCategories = request.SubCategories.Select(x => new ProductSubCategory
             {
                 SubCategoryId = x
-            })
+            }).ToList()
         };
         
         return await _productRepository.CreateAsync(product);

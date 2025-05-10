@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Momon.Biju.App.Domain.Entities;
 using Momon.Biju.App.Domain.Interfaces.Repositories;
 using Momon.Biju.App.Infra.Contexts;
@@ -8,5 +9,10 @@ public class SubCategoryRepository : BaseRepository<SubCategory>, ISubCategoryRe
 {
     public SubCategoryRepository(MomonBijuDbContext context) : base(context)
     {
+    }
+
+    public async Task<List<SubCategory>> ListSubCategoriesAsync(Guid categoryId)
+    {
+        return await Context.SubCategories.Where(x => x.CategoryId == categoryId).ToListAsync();
     }
 }

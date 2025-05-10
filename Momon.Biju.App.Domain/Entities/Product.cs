@@ -9,5 +9,5 @@ public class Product : BaseEntity
     public Guid CategoryId { get; set; }
     public Category Category { get; set; }
 
-    public IEnumerable<ProductSubCategory> SubCategories { get; set; }
+    public ICollection<ProductSubCategory> SubCategories { get; set; }
 }

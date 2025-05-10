@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Momon.Biju.App.Infra.Contexts;
 
@@ -11,9 +12,11 @@ using Momon.Biju.App.Infra.Contexts;
 namespace Momon.Biju.App.Infra.Contexts.Migrations
 {
     [DbContext(typeof(MomonBijuDbContext))]
-    partial class MomonBijuDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250510103032_CategoryHasManySubCategories")]
+    partial class CategoryHasManySubCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -15,5 +15,10 @@ public class SubCategoryConfiguration : IEntityTypeConfiguration<SubCategory>
         builder.Property(x => x.Name)
             .IsRequired()
             .HasMaxLength(200);
+
+        builder.HasOne(x => x.Category)
+            .WithMany(x => x.SubCategories)
+            .HasForeignKey(x => x.CategoryId)
+            .OnDelete(DeleteBehavior.NoAction);;
     }
 }

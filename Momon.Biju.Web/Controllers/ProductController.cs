@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Momon.Biju.App.Application.EntitiesActions.Produtcs.Commands;
 using Momon.Biju.App.Application.EntitiesActions.Produtcs.Queries;
 using Momon.Biju.App.Domain.Interfaces.Repositories;
+using Momon.Biju.Web.Helpers;
 using Momon.Biju.Web.Models;
 
 namespace Momon.Biju.Web.Controllers;
@@ -26,7 +27,7 @@ public class ProductController : BaseController
         _subCategoryRepository = subCategoryRepository;
     }
 
-    public async Task<ActionResult> Index(ListProductsQuery query)
+    public async Task<IActionResult> Index(ListProductsQuery query)
     {
         var products = await Mediator.Send(query);
 
@@ -38,7 +39,7 @@ public class ProductController : BaseController
                 Name = x.Name,
                 Description = x.Description,
                 Price = x.Price,
-                QuantityInStock = 0,
+                ImagePath = "/images/products/anel.jpg",
                 Category = new CategoryViewModel
                 {
                     Id = x.CategoryId,
@@ -54,7 +55,7 @@ public class ProductController : BaseController
         return View(vm);
     }
     
-    public async Task<ActionResult> Filter(ListProductsQuery query)
+    public async Task<IActionResult> Filter(ListProductsQuery query)
     {
         var products = await Mediator.Send(query);
 
@@ -64,7 +65,6 @@ public class ProductController : BaseController
             Name = x.Name,
             Description = x.Description,
             Price = x.Price,
-            QuantityInStock = 0,
             Category = new CategoryViewModel
             {
                 Id = x.CategoryId,
@@ -75,10 +75,11 @@ public class ProductController : BaseController
         return PartialView("_ProductList", vm);
     }
 
-    public async Task<ActionResult> CreateProduct()
+    [HttpGet]
+    public async Task<IActionResult> CreateProduct()
     {
         var categories = await _categoryRepository.GetAllAsync();
-        var subcategories = await _subCategoryRepository.GetAllAsync();
+        // var subcategories = await _subCategoryRepository.GetAllAsync();
 
         var vm = new NewProductViewModel
         {
@@ -86,21 +87,25 @@ public class ProductController : BaseController
             {
                 Value = x.Id.ToString(),
                 Text = x.Name
-            }),
-            SubCategories = subcategories.Select(x => new SelectListItem
-            {
-                Value = x.Id.ToString(),
-                Text = x.Name
             })
+            // SubCategories = subcategories.Select(x => new SelectListItem
+            // {
+            //     Value = x.Id.ToString(),
+            //     Text = x.Name
+            // })
         };
         
         return View(vm);
     }
 
-    public async Task<ActionResult> CreateProduct(NewProductViewModel vm)
+    [HttpPost]
+    public async Task<IActionResult> CreateProduct(NewProductViewModel vm, IFormFile productImage)
     {
+        var imagePath = await ImageUploadHelper.SaveProductImageAsync(productImage);
+        
         var command = new CreateProductCommand(
             vm.Name,
+            vm.Description,
             vm.Price,
             vm.SelectedCategoryId,
             vm.SelectedSubCategoriesId);
@@ -110,7 +115,7 @@ public class ProductController : BaseController
         return RedirectToAction("Index");
     }
     
-    public async Task<ActionResult> UpdateProduct(Guid id)
+    public async Task<IActionResult> UpdateProduct(Guid id)
     {
         var product = await _productRepository.GetAsync(id);
 
@@ -139,7 +144,7 @@ public class ProductController : BaseController
         return View(vm);
     }
     
-    public async Task<ActionResult> UpdateProduct(UpdateProductViewModel vm)
+    public async Task<IActionResult> UpdateProduct(UpdateProductViewModel vm)
     {
         var command = new UpdateProductCommand(
             vm.Id,
@@ -154,8 +159,22 @@ public class ProductController : BaseController
         return View(vm);
     }
 
-    public async Task<ActionResult> ListCategories()
+    public async Task<IActionResult> ListCategories()
     {
         return Ok(await _categoryRepository.GetAllAsync());
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> ListSubCategoriesAsync(Guid categoryId)
+    {
+        var subCategories = await _subCategoryRepository.ListSubCategoriesAsync(categoryId);
+        
+        var vm = subCategories.Select(x => new SubCategoryDto
+        {
+            Id = x.Id,
+            Name = x.Name
+        });
+        
+        return Json(vm);
     }
 }

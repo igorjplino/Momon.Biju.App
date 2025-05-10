@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Momon.Biju.App.Infra.Contexts;
 
@@ -11,9 +12,11 @@ using Momon.Biju.App.Infra.Contexts;
 namespace Momon.Biju.App.Infra.Contexts.Migrations
 {
     [DbContext(typeof(MomonBijuDbContext))]
-    partial class MomonBijuDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250510095944_AddSubCategory")]
+    partial class AddSubCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,17 +91,12 @@ namespace Momon.Biju.App.Infra.Contexts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("SubCategory", (string)null);
                 });
@@ -133,22 +131,9 @@ namespace Momon.Biju.App.Infra.Contexts.Migrations
                     b.Navigation("SubCategory");
                 });
 
-            modelBuilder.Entity("Momon.Biju.App.Domain.Entities.SubCategory", b =>
-                {
-                    b.HasOne("Momon.Biju.App.Domain.Entities.Category", "Category")
-                        .WithMany("SubCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("Momon.Biju.App.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Products");
-
-                    b.Navigation("SubCategories");
                 });
 
             modelBuilder.Entity("Momon.Biju.App.Domain.Entities.Product", b =>

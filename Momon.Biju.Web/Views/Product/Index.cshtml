@@ -5,6 +5,10 @@
     Layout = "_Layout";
 }
 
+@section Styles {
+    <link rel="stylesheet" href="~/css/product.css" />
+}
+
 <div class="row">
     <div class="col-md-3">
         @await Html.PartialAsync("_ProductFilter", Model.FiltersDto)
