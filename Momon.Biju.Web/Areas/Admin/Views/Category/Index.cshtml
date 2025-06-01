@@ -1,4 +1,4 @@
-@model IEnumerable<Momon.Biju.Web.Models.CategoryViewModel>
+@model IEnumerable<CategoryViewModel>
 
 @{
     ViewBag.Title = "Categorias";
@@ -22,9 +22,17 @@
         <tr>
             <td>@item.Name</td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                <a asp-area="Admin" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
             </td>
         </tr>
     }
     </tbody>
-</table>  
+</table>
+
+<pre>
+@foreach (var rd in Context.GetRouteData().Routers)
+    {
+        @rd.GetType().Name
+    }
+</pre>
+

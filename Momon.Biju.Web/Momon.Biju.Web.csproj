@@ -28,4 +28,10 @@
       <Folder Include="wwwroot\images\products\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\Admin\Views\SubCategory\Create.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\SubCategory\Edit.cshtml" />
+      <AdditionalFiles Include="Areas\Admin\Views\SubCategory\Index.cshtml" />
+    </ItemGroup>
+
 </Project>

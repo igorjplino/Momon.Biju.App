@@ -1,4 +1,4 @@
-namespace Momon.Biju.Web.Models;
+namespace Momon.Biju.Web.Areas.Admin.Models;
 
 public class CreateCategoryViewModel
 {

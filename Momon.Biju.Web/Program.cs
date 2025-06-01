@@ -32,12 +32,20 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseRouting();
 
+app.UseStaticFiles();
+app.UseRouting();
 app.UseAuthorization();
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
+// app.UseDefaultFiles();
+
+// app.MapAreaControllerRoute(
+//     name: "Administration",
+//     areaName: "Admin",
+//     pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
         name: "default",

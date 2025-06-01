@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Momon.Biju.App.Application.EntitiesActions.Produtcs.Commands;
 using Momon.Biju.App.Application.EntitiesActions.Produtcs.Queries;
 using Momon.Biju.App.Domain.Interfaces.Repositories;
+using Momon.Biju.Web.Areas.Admin.Models;
 using Momon.Biju.Web.Helpers;
 using Momon.Biju.Web.Models;
 

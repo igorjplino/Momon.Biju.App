@@ -1,4 +1,5 @@
 using Momon.Biju.App.Domain.Entities;
+using Momon.Biju.Web.Areas.Admin.Models;
 
 namespace Momon.Biju.Web.Models;
 

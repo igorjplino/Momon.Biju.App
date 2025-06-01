@@ -1,12 +1,14 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Momon.Biju.App.Application.EntitiesActions.Categories.Commands;
 using Momon.Biju.App.Application.EntitiesActions.SubCategories.Commands;
 using Momon.Biju.App.Domain.Interfaces.Repositories;
+using Momon.Biju.Web.Areas.Admin.Models;
+using Momon.Biju.Web.Controllers;
 using Momon.Biju.Web.Models;
 
-namespace Momon.Biju.Web.Controllers;
+namespace Momon.Biju.Web.Areas.Admin.Controllers;
 
+[Area("Admin")]
 public class SubCategoryController : BaseController
 {
     private readonly ISubCategoryRepository _subCategoryRepository;

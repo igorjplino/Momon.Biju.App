@@ -1,3 +1,5 @@
+using Momon.Biju.Web.Areas.Admin.Models;
+
 namespace Momon.Biju.Web.Models;
 
 public class ProductDto

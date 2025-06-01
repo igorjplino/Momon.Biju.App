@@ -2,10 +2,12 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Momon.Biju.App.Application.EntitiesActions.Categories.Commands;
 using Momon.Biju.App.Domain.Interfaces.Repositories;
-using Momon.Biju.Web.Models;
+using Momon.Biju.Web.Areas.Admin.Models;
+using Momon.Biju.Web.Controllers;
 
-namespace Momon.Biju.Web.Controllers;
+namespace Momon.Biju.Web.Areas.Admin.Controllers;
 
+[Area("Admin")]
 public class CategoryController : BaseController
 {
     private readonly ICategoryRepository _categoryRepository;
