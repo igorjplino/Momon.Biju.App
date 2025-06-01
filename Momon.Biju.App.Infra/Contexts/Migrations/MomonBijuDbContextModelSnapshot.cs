@@ -35,7 +35,7 @@ namespace Momon.Biju.App.Infra.Contexts.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category", (string)null);
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Momon.Biju.App.Domain.Entities.Product", b =>
@@ -43,6 +43,9 @@ namespace Momon.Biju.App.Infra.Contexts.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
@@ -60,9 +63,16 @@ namespace Momon.Biju.App.Infra.Contexts.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("ReferenceNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("ReferenceNumber")
+                        .IsUnique();
 
                     b.ToTable("Products", (string)null);
                 });
@@ -79,16 +89,13 @@ namespace Momon.Biju.App.Infra.Contexts.Migrations
 
                     b.HasIndex("SubCategoryId");
 
-                    b.ToTable("ProductSubCategory", (string)null);
+                    b.ToTable("ProductSubCategories", (string)null);
                 });
 
             modelBuilder.Entity("Momon.Biju.App.Domain.Entities.SubCategory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -98,9 +105,7 @@ namespace Momon.Biju.App.Infra.Contexts.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("SubCategory", (string)null);
+                    b.ToTable("SubCategories", (string)null);
                 });
 
             modelBuilder.Entity("Momon.Biju.App.Domain.Entities.Product", b =>
@@ -133,22 +138,9 @@ namespace Momon.Biju.App.Infra.Contexts.Migrations
                     b.Navigation("SubCategory");
                 });
 
-            modelBuilder.Entity("Momon.Biju.App.Domain.Entities.SubCategory", b =>
-                {
-                    b.HasOne("Momon.Biju.App.Domain.Entities.Category", "Category")
-                        .WithMany("SubCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("Momon.Biju.App.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Products");
-
-                    b.Navigation("SubCategories");
                 });
 
             modelBuilder.Entity("Momon.Biju.App.Domain.Entities.Product", b =>

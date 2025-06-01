@@ -158,23 +158,4 @@ public class ProductController : BaseController
         
         return View(vm);
     }
-
-    public async Task<IActionResult> ListCategories()
-    {
-        return Ok(await _categoryRepository.GetAllAsync());
-    }
-    
-    [HttpGet]
-    public async Task<IActionResult> ListSubCategoriesAsync(Guid categoryId)
-    {
-        var subCategories = await _subCategoryRepository.ListSubCategoriesAsync(categoryId);
-        
-        var vm = subCategories.Select(x => new SubCategoryDto
-        {
-            Id = x.Id,
-            Name = x.Name
-        });
-        
-        return Json(vm);
-    }
 }

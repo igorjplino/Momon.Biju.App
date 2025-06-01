@@ -13,6 +13,8 @@ builder.Services.AddInfraServices(builder.Configuration);
 
 builder.Services.Configure<Connections>(builder.Configuration.GetSection("ConnectionStrings"));
 
+builder.Services.AddRazorPages();
+
 builder.Services.AddMvc()
     .AddRazorRuntimeCompilation();
 

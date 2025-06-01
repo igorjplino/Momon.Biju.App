@@ -10,9 +10,4 @@ public class SubCategoryRepository : BaseRepository<SubCategory>, ISubCategoryRe
     public SubCategoryRepository(MomonBijuDbContext context) : base(context)
     {
     }
-
-    public async Task<List<SubCategory>> ListSubCategoriesAsync(Guid categoryId)
-    {
-        return await Context.SubCategories.Where(x => x.CategoryId == categoryId).ToListAsync();
-    }
 }

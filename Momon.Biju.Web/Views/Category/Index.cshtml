@@ -1,0 +1,30 @@
+@model IEnumerable<Momon.Biju.Web.Models.CategoryViewModel>
+
+@{
+    ViewBag.Title = "Categorias";
+    Layout = "_Layout";
+}
+
+<h2>Categorias</h2>
+
+<a asp-action="Create" class="btn btn-secondary">Nova categorias </a>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">@Html.DisplayNameFor(model => model.Name)</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>  

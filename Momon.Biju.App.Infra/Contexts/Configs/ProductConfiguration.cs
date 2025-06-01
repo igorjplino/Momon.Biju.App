@@ -24,6 +24,12 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .IsRequired()
             .HasColumnType("decimal(18,2)");
         
+        builder.Property(x => x.Active)
+            .IsRequired();
+        
+        builder.HasIndex(x => x.ReferenceNumber)
+            .IsUnique();
+        
         builder.HasOne(x => x.Category)
             .WithMany(x => x.Products)
             .HasForeignKey(x => x.CategoryId)

@@ -8,7 +8,7 @@ public class ProductSubCategoryConfiguration : IEntityTypeConfiguration<ProductS
 {
     public void Configure(EntityTypeBuilder<ProductSubCategory> builder)
     {
-        builder.ToTable("ProductSubCategory");
+        builder.ToTable("ProductSubCategories");
         
         builder.HasKey(x => new { x.ProductId, x.SubCategoryId });
 
