@@ -22,9 +22,9 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
 
     public async Task<(IEnumerable<Product> Exercises, int Total)> ListProductsAsync(ProductFilters filters)
     {
-        var productss = new Dictionary<Guid, Product>();
+        var productsDict = new Dictionary<Guid, Product>();
 
-        string sql =
+        var sql =
             """
             SELECT
                 p.Id,
@@ -37,7 +37,7 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
                 COUNT(*) OVER() AS Total
             FROM 
                 Products p
-                INNER JOIN Category c ON c.Id = p.CategoryId
+                INNER JOIN Categories c ON c.Id = p.CategoryId
             WHERE 1=1
             """;
 
@@ -70,14 +70,14 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
                 splitOn: "Category,Total",
                 map: (product, category, total) =>
                 {
-                    if (!productss.TryGetValue(product.Id, out Product productDict))
+                    if (!productsDict.TryGetValue(product.Id, out Product productDict))
                     {
-                        productss[product.Id] = product;
+                        productsDict[product.Id] = product;
                     }
                     
-                    productss[product.Id].Category = category;
+                    productsDict[product.Id].Category = category;
 
-                    return (productss[product.Id], total);
+                    return (productsDict[product.Id], total);
                 });
 
         List<(Product Product, int Total)> valueTuples = result.ToList();

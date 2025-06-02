@@ -1,0 +1,79 @@
+@model CreateProductViewModel
+
+@{
+    ViewBag.Title = "Cadastrar produto";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/customFileInput.css" asp-append-version="true"/>
+}
+
+<h2>Novo produto</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control"/>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" style="resize:none;" rows="3" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" type="number" step="0.01"/>
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-4">
+        <label asp-for="SelectedCategoryId" class="form-label"></label>
+        <select asp-for="SelectedCategoryId" asp-items="Model.Categories" class="form-select">
+            <option value="">Selecione a categoria</option>
+        </select>
+        <span asp-validation-for="SelectedCategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <custom-file-input prop-name="ProductImage"></custom-file-input>
+    </div>
+    
+    <div class="mb-3">
+        <select multiple="multiple" size="10" name="SelectedSubCategoriesId" id="duallistbox_subcategory">
+            @foreach (var item in Model.SubCategories)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>    
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <input type="submit" value="Salvar" class="btn btn-primary" />
+    </div>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+</form>
+
+@section Scripts {
+    <script>
+        $('#duallistbox_subcategory').bootstrapDualListbox({
+            nonSelectedListLabel: 'Subcategorias disponíveis',
+            selectedListLabel: 'Subcategorias selecionadas',
+            moveAllLabel: 'Mover todos',
+            moveSelectedLabel: 'Mover selecionados',
+            removeAllLabel: 'Remover todos',
+            removeSelectedLabel: 'Remover selecionados',
+            preserveSelectionOnMove: 'moved',
+            moveOnSelect: false,
+            showFilterInputs: false,
+            infoText: false
+        });
+    </script>
+}

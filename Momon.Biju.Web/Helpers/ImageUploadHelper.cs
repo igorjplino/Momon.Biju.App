@@ -4,7 +4,7 @@ public static class ImageUploadHelper
 {
     public static async Task<string> SaveProductImageAsync(IFormFile imageFile)
     {
-        if (imageFile.Length == 0)
+        if (imageFile is null || imageFile.Length == 0)
             throw new Exception();
 
         const string folder = "products";
