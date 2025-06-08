@@ -14,15 +14,18 @@ namespace Momon.Biju.Web.Areas.Admin.Controllers;
 [Area("Admin")]
 public class ProductController : BaseController
 {
+    private readonly IProductRepository _productRepository;
     private readonly ICategoryRepository _categoryRepository;
     private readonly ISubCategoryRepository _subCategoryRepository;
     
     public ProductController(
         IMediator mediator, 
+        IProductRepository productRepository,
         ICategoryRepository categoryRepository, 
         ISubCategoryRepository subCategoryRepository)
         : base(mediator)
     {
+        _productRepository = productRepository;
         _categoryRepository = categoryRepository;
         _subCategoryRepository = subCategoryRepository;
     }
@@ -39,7 +42,7 @@ public class ProductController : BaseController
                 Name = x.Name,
                 Description = x.Description,
                 Price = x.Price,
-                ImagePath = "/images/products/anel.jpg",
+                ImagePath = x.ImagePath,
                 Category = new CategoryViewModel
                 {
                     Id = x.CategoryId,
@@ -80,7 +83,7 @@ public class ProductController : BaseController
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(CreateProductViewModel vm/*, IFormFile productImage*/)
+    public async Task<IActionResult> Create(CreateProductViewModel vm)
     {
         var imagePath = await ImageUploadHelper.SaveProductImageAsync(vm.ProductImage);
         
@@ -88,6 +91,8 @@ public class ProductController : BaseController
             vm.Name,
             vm.Description,
             vm.Price,
+            vm.ReferenceNumber,
+            imagePath,
             vm.SelectedCategoryId,
             vm.SelectedSubCategoriesId);
         
@@ -95,4 +100,52 @@ public class ProductController : BaseController
         
         return RedirectToAction("Index");
     }
+    
+    public async Task<IActionResult> Edit(Guid? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+        
+        var product = await _productRepository.GetToEditAsync(id.Value);
+
+        if (product == null)
+        {
+            return NotFound();
+        }
+        
+        var categories = await _categoryRepository.GetAllAsync();
+        var subcategories = await _subCategoryRepository.GetAllAsync();
+
+        var vm = new EditProductViewModel()
+        {
+            Id = product.Id,
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price.ToString("F"),
+            CurrentProductImage = product.ImagePath,
+            SelectedCategoryId = product.CategoryId,
+            SelectedSubCategoriesId = product.SubCategories.Select(x => x.SubCategoryId),
+            Categories = categories.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name
+            }),
+            SubCategories = subcategories.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name
+            })
+        };
+
+        return View(vm);
+    }
+
+    // [HttpPost]
+    // [ValidateAntiForgeryToken]
+    // public async Task<IActionResult> Edit(EditProductViewModel vm)
+    // {
+    //     
+    // }
 }

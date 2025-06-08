@@ -1,4 +1,6 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Momon.Biju.App.Domain.Entities;
 using Momon.Biju.App.Domain.Interfaces.Repositories;
 using Momon.Biju.App.Infra.Contexts;
@@ -49,5 +51,14 @@ public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         Context.Set<T>().Update(entity);
         await Context.SaveChangesAsync();
+    }
+    
+    protected async Task<T?> GetAsync(Expression<Func<T, bool>> expression, Func<IQueryable<T>, IIncludableQueryable<T, object>> includes)
+    {
+        IQueryable<T> query = Context.Set<T>();
+
+        query = includes(query);
+
+        return await query.FirstOrDefaultAsync(expression);
     }
 }

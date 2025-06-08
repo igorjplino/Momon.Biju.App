@@ -1,5 +1,6 @@
 using Dapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Momon.Biju.App.Domain.Entities;
 using Momon.Biju.App.Domain.Interfaces.Repositories;
@@ -31,6 +32,7 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
                 p.Name,
                 p.Description,
                 p.Price,
+                p.ImagePath,
                 '' AS Category,
                 c.Id,
                 c.Name,
@@ -91,5 +93,13 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
     public Task<Product?> GetByNameAsync(string name)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<Product?> GetToEditAsync(Guid id)
+    {
+        return await GetAsync(
+            expression: x => x.Id == id,
+            includes: source => source
+                .Include(x => x.SubCategories));
     }
 }

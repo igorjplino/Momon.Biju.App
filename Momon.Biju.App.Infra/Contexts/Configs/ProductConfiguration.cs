@@ -26,6 +26,10 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         
         builder.Property(x => x.Active)
             .IsRequired();
+
+        builder.Property(x => x.ImagePath)
+            .IsRequired()
+            .HasMaxLength(500);
         
         builder.HasIndex(x => x.ReferenceNumber)
             .IsUnique();

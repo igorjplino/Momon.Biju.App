@@ -1,7 +1,7 @@
-@model CreateProductViewModel
+@model EditProductViewModel
 
 @{
-    ViewBag.Title = "Cadastrar produto";
+    ViewBag.Title = "Editar produto";
     Layout = "_Layout";
 }
 
@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="~/css/customFileInput.css" asp-append-version="true"/>
 }
 
-<h2>Novo produto</h2>
+<h2>Editar produto</h2>
 
-<form asp-action="Create" method="post" enctype="multipart/form-data">
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <input type="hidden" asp-for="Id" />
 
     <div class="mb-3">
         <label asp-for="Name" class="form-label"></label>
@@ -47,7 +49,10 @@
     </div>
 
     <div class="mb-3">
-        <custom-file-input prop-name="ProductImage"></custom-file-input>
+        <label asp-for="CurrentProductImage" class="form-label"></label>
+        <br />
+        <img src="@Model.CurrentProductImage" alt="Imagem atual" style="max-height:200px;" />
+        <custom-file-input prop-name="NewProductImage"></custom-file-input>
     </div>
     
     <div class="mb-3">
@@ -66,35 +71,3 @@
     </div>
     <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
 </form>
-
-@section Scripts {
-    <script>
-        $('#duallistbox_subcategory').bootstrapDualListbox({
-            nonSelectedListLabel: 'Subcategorias disponíveis',
-            selectedListLabel: 'Subcategorias selecionadas',
-            moveAllLabel: 'Mover todos',
-            moveSelectedLabel: 'Mover selecionados',
-            removeAllLabel: 'Remover todos',
-            removeSelectedLabel: 'Remover selecionados',
-            preserveSelectionOnMove: 'moved',
-            moveOnSelect: false,
-            showFilterInputs: false,
-            infoText: false
-        });
-
-        function previewImage(event) {
-            const input = event.target;
-            const preview = document.getElementById('imagePreview');
-
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-
-                reader.onload = function (e) {
-                    preview.src = e.target.result;
-                };
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-    </script>
-}

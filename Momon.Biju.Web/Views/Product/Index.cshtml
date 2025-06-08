@@ -1,45 +1,45 @@
-@model ListProductViewModel
-
-@{
-    ViewBag.Title = "Bijouterias";
-    Layout = "_Layout";
-}
-
-@section Styles {
-    <link rel="stylesheet" href="~/css/product.css" />
-}
-
-<div class="row">
-    <div class="col-md-3">
-        @await Html.PartialAsync("_ProductFilter", Model.FiltersDto)
-    </div>
-
-    <div class="col-md-9">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <a href="@Url.Action("CreateProduct", "Product")" class="btn btn-success">
-                <i class="bi bi-plus-lg"></i> Create Product
-            </a>
-            <div>
-                Pagination...
-            </div>
-        </div>
-        <hr/>
-        <div id="product-list">
-            @await Html.PartialAsync("_ProductList", Model.Products)
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-    <script>
-        $(function () {
-            $("#filter-form").on("submit", function (e) {
-                e.preventDefault();
-
-                $.get("@Url.Action("Filter", "Product")", $(this).serialize(), function (data) {
-                    $("#product-list").html(data);
-                });
-            });
-        });
-    </script>
-}
+@* @model ListProductViewModel *@
+@* *@
+@* @{ *@
+@*     ViewBag.Title = "Bijouterias"; *@
+@*     Layout = "_Layout"; *@
+@* } *@
+@* *@
+@* @section Styles { *@
+@*     <link rel="stylesheet" href="~/css/product.css" /> *@
+@* } *@
+@* *@
+@* <div class="row"> *@
+@*     <div class="col-md-3"> *@
+@*         @await Html.PartialAsync("_ProductFilter", Model.FiltersDto) *@
+@*     </div> *@
+@* *@
+@*     <div class="col-md-9"> *@
+@*         <div class="d-flex justify-content-between align-items-center mb-3"> *@
+@*             <a href="@Url.Action("CreateProduct", "Product")" class="btn btn-success"> *@
+@*                 <i class="bi bi-plus-lg"></i> Create Product *@
+@*             </a> *@
+@*             <div> *@
+@*                 Pagination... *@
+@*             </div> *@
+@*         </div> *@
+@*         <hr/> *@
+@*         <div id="product-list"> *@
+@*             @await Html.PartialAsync("_ProductList", Model.Products) *@
+@*         </div> *@
+@*     </div> *@
+@* </div> *@
+@* *@
+@* @section Scripts { *@
+@*     <script> *@
+@*         $(function () { *@
+@*             $("#filter-form").on("submit", function (e) { *@
+@*                 e.preventDefault(); *@
+@* *@
+@*                 $.get("@Url.Action("Filter", "Product")", $(this).serialize(), function (data) { *@
+@*                     $("#product-list").html(data); *@
+@*                 }); *@
+@*             }); *@
+@*         }); *@
+@*     </script> *@
+@* } *@

@@ -2,10 +2,12 @@ namespace Momon.Biju.Web.Helpers;
 
 public static class ImageUploadHelper
 {
-    public static async Task<string> SaveProductImageAsync(IFormFile imageFile)
+    public static async Task<string> SaveProductImageAsync(IFormFile? imageFile)
     {
         if (imageFile is null || imageFile.Length == 0)
-            throw new Exception();
+        {
+            return string.Empty;
+        }
 
         const string folder = "products";
 
@@ -22,7 +24,6 @@ public static class ImageUploadHelper
             await imageFile.CopyToAsync(stream);
         }
 
-        // Return the relative path to use in <img src=...>
         return $"/images/{folder}/{fileName}";
     }
 }
