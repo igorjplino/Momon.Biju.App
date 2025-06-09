@@ -102,4 +102,25 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
             includes: source => source
                 .Include(x => x.SubCategories));
     }
+
+    public async Task UpdateProductAsync(Product product)
+    {
+        await using var transaction = await Context.Database.BeginTransactionAsync();
+        
+        try
+        {
+            await Context.ProductsSubCategories
+                .Where(x => x.ProductId == product.Id)
+                .ExecuteDeleteAsync();
+
+            await UpdateAsync(product);
+            await transaction.CommitAsync();
+        }
+        catch (Exception e)
+        {
+            await transaction.RollbackAsync();
+            //TODO log
+            throw;
+        }
+    }
 }

@@ -5,17 +5,20 @@ using Momon.Biju.App.Domain.Interfaces.Repositories;
 
 namespace Momon.Biju.App.Application.EntitiesActions.Produtcs.Commands;
 
-public record UpdateProductCommand(
+public record EditProductCommand(
     Guid ProductId,
     string Name,
-    string Price,
+    string Description,
+    decimal Price,
+    string ReferenceNumber,
+    string ImagePath,
     Guid CategoryId,
     IEnumerable<Guid> SubCategories)
     : IRequest<Result<Product>>
 {
 }
 
-public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Result<Product>>
+public class UpdateProductCommandHandler : IRequestHandler<EditProductCommand, Result<Product>>
 {
     private readonly IProductRepository _productRepository;
 
@@ -24,13 +27,16 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
         _productRepository = productRepository;
     }
 
-    public async Task<Result<Product>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Product>> Handle(EditProductCommand request, CancellationToken cancellationToken)
     {
         var product = new Product
         {
             Id = request.ProductId,
             Name = request.Name,
-            Price = Math.Round(decimal.Parse(request.Price), 2),
+            Description = request.Description,
+            Price = request.Price,
+            ReferenceNumber = request.ReferenceNumber,
+            ImagePath = request.ImagePath,
             CategoryId = request.CategoryId,
             SubCategories = request.SubCategories.Select(x => new ProductSubCategory
             {
@@ -38,7 +44,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
             }).ToList()
         };
         
-        await _productRepository.UpdateAsync(product);
+        await _productRepository.UpdateProductAsync(product);
         
         return product;
     }

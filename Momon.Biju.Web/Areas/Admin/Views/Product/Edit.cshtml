@@ -52,6 +52,7 @@
         <label asp-for="CurrentProductImage" class="form-label"></label>
         <br />
         <img src="@Model.CurrentProductImage" alt="Imagem atual" style="max-height:200px;" />
+        <input type="hidden" asp-for="CurrentProductImage" />
         <custom-file-input prop-name="NewProductImage"></custom-file-input>
     </div>
     
@@ -59,7 +60,14 @@
         <select multiple="multiple" size="10" name="SelectedSubCategoriesId" id="duallistbox_subcategory">
             @foreach (var item in Model.SubCategories)
             {
-                <option value="@item.Value">@item.Text</option>
+                if (Model.SelectedSubCategoriesId.Any(x => x.ToString() == item.Value))
+                {
+                    <option value="@item.Value" selected>@item.Text</option>    
+                }
+                else
+                {
+                    <option value="@item.Value">@item.Text</option>
+                }
             }
         </select>    
     </div>
@@ -71,3 +79,8 @@
     </div>
     <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
 </form>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap4-duallistbox/dist/jquery.bootstrap-duallistbox.min.js"></script>
+    <script src="~/js/product.js"></script>
+}

@@ -2,11 +2,11 @@ namespace Momon.Biju.Web.Helpers;
 
 public static class ImageUploadHelper
 {
-    public static async Task<string> SaveProductImageAsync(IFormFile? imageFile)
+    public static async Task<string?> SaveProductImageAsync(IFormFile? imageFile)
     {
         if (imageFile is null || imageFile.Length == 0)
         {
-            return string.Empty;
+            return null;
         }
 
         const string folder = "products";

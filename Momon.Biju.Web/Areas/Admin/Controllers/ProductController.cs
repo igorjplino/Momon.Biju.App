@@ -123,7 +123,8 @@ public class ProductController : BaseController
             Id = product.Id,
             Name = product.Name,
             Description = product.Description,
-            Price = product.Price.ToString("F"),
+            Price = product.Price,
+            ReferenceNumber = product.ReferenceNumber,
             CurrentProductImage = product.ImagePath,
             SelectedCategoryId = product.CategoryId,
             SelectedSubCategoriesId = product.SubCategories.Select(x => x.SubCategoryId),
@@ -142,10 +143,24 @@ public class ProductController : BaseController
         return View(vm);
     }
 
-    // [HttpPost]
-    // [ValidateAntiForgeryToken]
-    // public async Task<IActionResult> Edit(EditProductViewModel vm)
-    // {
-    //     
-    // }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(EditProductViewModel vm)
+    {
+        var imagePath = await ImageUploadHelper.SaveProductImageAsync(vm.NewProductImage);
+        
+        var command = new EditProductCommand(
+            vm.Id,
+            vm.Name,
+            vm.Description,
+            vm.Price,
+            vm.ReferenceNumber,
+            imagePath ?? vm.CurrentProductImage,
+            vm.SelectedCategoryId,
+            vm.SelectedSubCategoriesId);
+        
+        await Mediator.Send(command);
+        
+        return RedirectToAction("Index");
+    }
 }

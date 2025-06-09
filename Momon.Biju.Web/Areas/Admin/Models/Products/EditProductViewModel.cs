@@ -13,7 +13,7 @@ public class EditProductViewModel
     public string Description { get; set; }
     
     [Display(Name = "Preço")]
-    public string Price { get; set; }
+    public decimal Price { get; set; }
     
     [Display(Name = "Número de Referência")]
     public string ReferenceNumber { get; set; }
