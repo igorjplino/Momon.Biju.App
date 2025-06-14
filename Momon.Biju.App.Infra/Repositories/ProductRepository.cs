@@ -37,7 +37,6 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
                     p.ImagePath,
                     c.Id AS CategoryId,
                     c.Name AS CategoryName,
-                    COUNT(*) OVER() AS Total,
                     ROW_NUMBER() OVER (PARTITION BY p.Id ORDER BY p.Name) AS rn
                 FROM 
                     Products p
@@ -70,7 +69,7 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
                 ImagePath,
                 CategoryId,
                 CategoryName,
-                Total
+                COUNT(*) OVER() AS Total
             FROM RankedProducts
             WHERE rn = 1
             ORDER BY Name

@@ -16,4 +16,5 @@ public class FilterProductsInListDto
     public IEnumerable<SelectListItem> SubCategories { get; set; }
     
     public int PageSize { get; set; }
+    public int PageNumber { get; set; }
 }

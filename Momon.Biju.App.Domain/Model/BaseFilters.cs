@@ -16,8 +16,14 @@ public record BaseFilters
         int? pageNumber,
         int? pageSize)
     {
-        PageNumber = pageNumber ?? PageNumberDefault;
-        PageSize = pageSize is > MaxPageSize or null ? MaxPageSize : pageSize.Value;
+        PageNumber = pageNumber is null or <= 0 ? PageNumberDefault : pageNumber.Value;
+        PageSize = pageSize switch
+        {
+            null => PageSizeDefault,
+            > MaxPageSize => MaxPageSize,
+            <= 0 => PageSizeDefault,
+            _ => pageSize.Value
+        };
     }
 
     public int PageNumber { get; }

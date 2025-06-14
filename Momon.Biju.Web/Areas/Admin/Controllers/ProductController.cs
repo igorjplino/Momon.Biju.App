@@ -9,6 +9,7 @@ using Momon.Biju.Web.Areas.Admin.Models;
 using Momon.Biju.Web.Areas.Admin.Models.Products;
 using Momon.Biju.Web.Controllers;
 using Momon.Biju.Web.Helpers;
+using X.PagedList;
 
 namespace Momon.Biju.Web.Areas.Admin.Controllers;
 
@@ -31,16 +32,24 @@ public class ProductController : BaseController
         _subCategoryRepository = subCategoryRepository;
     }
     
-    public async Task<IActionResult> Index(ListProductsQuery query)
+    [HttpGet]
+    public async Task<IActionResult> Index([FromQuery] FilterProductsInListDto? filters)
     {
-        var products = await Mediator.Send(query);
+        var query = new ListProductsQuery(new ProductFilters(
+            pageNumber: filters?.PageNumber,
+            pageSize: filters?.PageSize,
+            name: filters?.Name,
+            categoryId: filters?.SelectedCategoryId,
+            subCategoryId: filters?.SelectedSubCategoryId
+        ));
+        
+        var result = await Mediator.Send(query);
         
         var categories = await _categoryRepository.GetAllAsync();
         var subcategories = await _subCategoryRepository.GetAllAsync();
 
-        var vm = new ListProductViewModel()
-        {
-            Products = products.Value.Items.Select(x => new ProductInListDto
+        var products = result.Value.Items
+            .Select(x => new ProductInListDto
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -52,7 +61,13 @@ public class ProductController : BaseController
                     Id = x.CategoryId,
                     Name = x.Category.Name
                 }
-            }),
+            });
+        
+        var productsPaged  = new StaticPagedList<ProductInListDto>(products, result.Value.PageNumber, result.Value.PageSize, result.Value.Total);
+        
+        var vm = new ListProductViewModel()
+        {
+            Products = productsPaged,
             Filter = new FilterProductsInListDto
             {
                 SelectedCategoryId = query.Filters?.CategoryId,
@@ -67,43 +82,12 @@ public class ProductController : BaseController
                     Value = x.Id.ToString(),
                     Text = x.Name
                 }),
-                PageSize = products.Value.PageSize
-            },
-            // PageNumber = products.Value.PageNumber,
-            // PageSize = products.Value.PageSize,
-            Total = products.Value.Total
+                PageSize = result.Value.PageSize,
+                PageNumber = result.Value.PageNumber
+            }
         };
 
         return View(vm);
-    }
-    
-    [HttpGet]
-    public async Task<IActionResult> Filter([FromQuery] FilterProductsInListDto? filters)
-    {
-        var query = new ListProductsQuery(new ProductFilters(
-            pageSize: filters?.PageSize,
-            name: filters?.Name,
-            categoryId: filters?.SelectedCategoryId,
-            subCategoryId: filters?.SelectedSubCategoryId
-        ));
-        
-        var products = await Mediator.Send(query);
-    
-        var vm = products.Value.Items.Select(x => new ProductInListDto
-        {
-            Id = x.Id,
-            Name = x.Name,
-            Description = x.Description,
-            Price = x.Price,
-            ImagePath = x.ImagePath,
-            Category = new CategoryViewModel
-            {
-                Id = x.CategoryId,
-                Name = x.Category.Name
-            }
-        });
-    
-        return PartialView("_ProductList", vm);
     }
     
     [HttpGet]
