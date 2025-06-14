@@ -3,19 +3,21 @@ namespace Momon.Biju.App.Domain.Model;
 public record BaseFilters
 {
     private const int MaxPageSize = 50;
+    private const int PageNumberDefault = 1;
+    private const int PageSizeDefault = 10;
     
     protected BaseFilters()
     {
-        PageNumber = 1;
-        PageSize = 10;
+        PageNumber = PageNumberDefault;
+        PageSize = PageSizeDefault;
     }
     
     protected BaseFilters(
-        int pageNumber,
-        int pageSize)
+        int? pageNumber,
+        int? pageSize)
     {
-        PageNumber = pageNumber;
-        PageSize = pageSize > 50 ? MaxPageSize : pageSize;
+        PageNumber = pageNumber ?? PageNumberDefault;
+        PageSize = pageSize is > MaxPageSize or null ? MaxPageSize : pageSize.Value;
     }
 
     public int PageNumber { get; }

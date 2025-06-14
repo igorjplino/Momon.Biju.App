@@ -6,14 +6,20 @@ public record ProductFilters : BaseFilters
     {
     }
 
-    protected ProductFilters(
-        int pageNumber = 1,
-        int pageSize = 10,
-        string? name = null)
+    public ProductFilters(
+        int? pageNumber = 1,
+        int? pageSize = 10,
+        string? name = null,
+        Guid? categoryId = null,
+        Guid? subCategoryId = null)
         : base(pageNumber, pageSize)
     {
         Name = name;
+        CategoryId = categoryId;
+        SubCategoryId = subCategoryId;
     }
 
-    public string? Name { get; set; }
+    public string? Name { get; }
+    public Guid? CategoryId { get; }
+    public Guid? SubCategoryId { get; }
 }

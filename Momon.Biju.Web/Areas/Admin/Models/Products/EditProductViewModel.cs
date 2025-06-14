@@ -25,7 +25,7 @@ public class EditProductViewModel
     public string CurrentProductImage { get; set; }
     public IFormFile? NewProductImage { get; set; }
     
-    [Display(Name = "Sub Categoria")]
+    [Display(Name = "Subcategoria")]
     public IEnumerable<Guid> SelectedSubCategoriesId { get; set; }
     
     public IEnumerable<SelectListItem> Categories { get; set; }

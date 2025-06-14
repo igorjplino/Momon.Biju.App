@@ -24,22 +24,12 @@
             </div>
         </div>
         <hr/>
-        <div id="product-list">
+        <div id="product-list-container">
             @await Html.PartialAsync("_ProductList", Model.Products)
         </div>
     </div>
 </div>
 
 @section Scripts {
-    <script>
-        $(function () {
-            $("#filter-form").on("submit", function (e) {
-                e.preventDefault();
-
-                $.get("@Url.Action("Filter", "Product")", $(this).serialize(), function (data) {
-                    $("#product-list").html(data);
-                });
-            });
-        });
-    </script>
+    <script src="~/js/filter-products.js"></script>
 }

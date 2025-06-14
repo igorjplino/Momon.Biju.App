@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Momon.Biju.App.Application.EntitiesActions.Produtcs.Commands;
 using Momon.Biju.App.Application.EntitiesActions.Produtcs.Queries;
 using Momon.Biju.App.Domain.Interfaces.Repositories;
+using Momon.Biju.App.Domain.Model;
 using Momon.Biju.Web.Areas.Admin.Models;
 using Momon.Biju.Web.Areas.Admin.Models.Products;
 using Momon.Biju.Web.Controllers;
@@ -33,6 +34,9 @@ public class ProductController : BaseController
     public async Task<IActionResult> Index(ListProductsQuery query)
     {
         var products = await Mediator.Send(query);
+        
+        var categories = await _categoryRepository.GetAllAsync();
+        var subcategories = await _subCategoryRepository.GetAllAsync();
 
         var vm = new ListProductViewModel()
         {
@@ -49,13 +53,57 @@ public class ProductController : BaseController
                     Name = x.Category.Name
                 }
             }),
-            Filter = new FilterProductsInListDto(),
-            PageNumber = products.Value.PageNumber,
-            PageSize = products.Value.PageSize,
+            Filter = new FilterProductsInListDto
+            {
+                SelectedCategoryId = query.Filters?.CategoryId,
+                SelectedSubCategoryId = query.Filters?.SubCategoryId,
+                Categories = categories.Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name
+                }),
+                SubCategories = subcategories.Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name
+                }),
+                PageSize = products.Value.PageSize
+            },
+            // PageNumber = products.Value.PageNumber,
+            // PageSize = products.Value.PageSize,
             Total = products.Value.Total
         };
 
         return View(vm);
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> Filter([FromQuery] FilterProductsInListDto? filters)
+    {
+        var query = new ListProductsQuery(new ProductFilters(
+            pageSize: filters?.PageSize,
+            name: filters?.Name,
+            categoryId: filters?.SelectedCategoryId,
+            subCategoryId: filters?.SelectedSubCategoryId
+        ));
+        
+        var products = await Mediator.Send(query);
+    
+        var vm = products.Value.Items.Select(x => new ProductInListDto
+        {
+            Id = x.Id,
+            Name = x.Name,
+            Description = x.Description,
+            Price = x.Price,
+            ImagePath = x.ImagePath,
+            Category = new CategoryViewModel
+            {
+                Id = x.CategoryId,
+                Name = x.Category.Name
+            }
+        });
+    
+        return PartialView("_ProductList", vm);
     }
     
     [HttpGet]

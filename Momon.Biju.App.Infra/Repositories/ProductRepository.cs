@@ -1,3 +1,4 @@
+using System.Text;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -25,67 +26,88 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
         var productsDict = new Dictionary<Guid, Product>();
 
-        var sql =
+        var sql = new StringBuilder(
             """
-            SELECT
-                p.Id,
-                p.Name,
-                p.Description,
-                p.Price,
-                p.ImagePath,
-                '' AS Category,
-                c.Id,
-                c.Name,
-                COUNT(*) OVER() AS Total
-            FROM 
-                Products p
-                INNER JOIN Categories c ON c.Id = p.CategoryId
-            WHERE 1=1
-            """;
+            WITH RankedProducts AS (
+                SELECT
+                    p.Id,
+                    p.Name,
+                    p.Description,
+                    p.Price,
+                    p.ImagePath,
+                    c.Id AS CategoryId,
+                    c.Name AS CategoryName,
+                    COUNT(*) OVER() AS Total,
+                    ROW_NUMBER() OVER (PARTITION BY p.Id ORDER BY p.Name) AS rn
+                FROM 
+                    Products p
+                    INNER JOIN ProductSubCategories psc ON psc.ProductId = p.Id
+                    INNER JOIN Categories c ON c.Id = p.CategoryId
+            """);
+
+        var conditions = new List<string>();
 
         if (!string.IsNullOrWhiteSpace(filters.Name))
-        {
-            sql += " AND p.Name LIKE @Name";
-        }
+            conditions.Add("p.Name LIKE @Name");
 
-        sql +=
+        if (filters.CategoryId.HasValue)
+            conditions.Add("c.Id = @CategoryId");
+
+        if (filters.SubCategoryId.HasValue)
+            conditions.Add("psc.SubCategoryId = @SubCategoryId");
+
+        if (conditions.Count > 0)
+            sql.AppendLine(" WHERE " + string.Join(" AND ", conditions));
+
+        sql.AppendLine(
             """
-            ORDER BY p.Name
+            )
+            SELECT
+                Id,
+                Name,
+                Description,
+                Price,
+                ImagePath,
+                CategoryId,
+                CategoryName,
+                Total
+            FROM RankedProducts
+            WHERE rn = 1
+            ORDER BY Name
             OFFSET @Offset ROWS 
-            FETCH NEXT @PageSize ROWS ONLY
-            """;
+            FETCH NEXT @PageSize ROWS ONLY;
+            """);
 
         var param = new
         {
             Offset = (filters.PageNumber - 1) * filters.PageSize,
             filters.PageSize,
             Name = $"%{filters.Name}%",
+            filters.CategoryId,
+            filters.SubCategoryId,
         };
 
-        await using SqlConnection conn = new SqlConnection(_momonBijuDb);
+        await using var conn = new SqlConnection(_momonBijuDb);
 
-        // IEnumerable<(Product Product, int Total)> result =
-        var result =
-            await conn.QueryAsync<Product, Category, int, (Product Product, int Total)>(
-                sql: sql,
-                param: param,
-                splitOn: "Category,Total",
-                map: (product, category, total) =>
-                {
-                    if (!productsDict.TryGetValue(product.Id, out Product productDict))
-                    {
-                        productsDict[product.Id] = product;
-                    }
-                    
-                    productsDict[product.Id].Category = category;
+        var result = await conn.QueryAsync<ProductRow>(
+            sql: sql.ToString(),
+            param: param);
+        
+        var products = result.Select(r => new Product
+        {
+            Id = r.Id,
+            Name = r.Name,
+            Description = r.Description,
+            Price = r.Price,
+            ImagePath = r.ImagePath,
+            Category = new Category
+            {
+                Id = r.CategoryId,
+                Name = r.CategoryName
+            }
+        }).ToList();
 
-                    return (productsDict[product.Id], total);
-                });
-
-        List<(Product Product, int Total)> valueTuples = result.ToList();
-
-        var products = valueTuples.Select(x => x.Product);
-        var total = valueTuples.FirstOrDefault().Total;
+        var total = result.FirstOrDefault()?.Total ?? 0;
 
         return (products, total);
     }
