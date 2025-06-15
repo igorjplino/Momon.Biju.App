@@ -3,7 +3,9 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Momon.Biju.App.Application.Common;
+using Momon.Biju.App.Application.EntitiesActions.Categories.Commands;
 using Momon.Biju.App.Application.EntitiesActions.Produtcs.Commands;
+using Momon.Biju.App.Application.EntitiesActions.SubCategories.Commands;
 
 namespace Momon.Biju.App.Application;
 
@@ -14,7 +16,7 @@ public static class ConfigureService
         ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
         ValidatorOptions.Global.DefaultClassLevelCascadeMode = CascadeMode.Stop;
         
-        //TODO add validatiors
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         services.AddMediatR(cfg =>
         {
@@ -22,6 +24,10 @@ public static class ConfigureService
 
             cfg.AddValidationBehavior<CreateProductCommand, Guid>();
             cfg.AddValidationBehavior<EditProductCommand, bool>();
+            
+            cfg.AddValidationBehavior<CreateCategoryCommand, Guid>();
+            
+            cfg.AddValidationBehavior<CreateSubCategoryCommand, Guid>();
         });
         
         return services;

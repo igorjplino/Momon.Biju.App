@@ -20,11 +20,10 @@ public readonly struct Result<TValue>
     }
 
     public bool IsError { get; }
-
     public TValue? Value => _value;
+    public Exception? Error => _error;
 
     public static implicit operator Result<TValue>(TValue? value) => new(value);
-
     public static implicit operator Result<TValue>(Exception error) => new(error);
 
     public TResult Match<TResult>(

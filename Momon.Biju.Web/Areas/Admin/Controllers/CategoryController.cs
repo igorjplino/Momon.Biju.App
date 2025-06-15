@@ -4,6 +4,7 @@ using Momon.Biju.App.Application.EntitiesActions.Categories.Commands;
 using Momon.Biju.App.Domain.Interfaces.Repositories;
 using Momon.Biju.Web.Areas.Admin.Models;
 using Momon.Biju.Web.Controllers;
+using Momon.Biju.Web.Helpers;
 
 namespace Momon.Biju.Web.Areas.Admin.Controllers;
 
@@ -45,7 +46,13 @@ public class CategoryController : BaseController
     {
         var command = new CreateCategoryCommand(vm.Name);
         
-        await Mediator.Send(command);
+        var result = await Mediator.Send(command);
+
+        if (result.IsError)
+        {
+            ModelState.AddValidationException(result.Error);
+            return View(vm);
+        }
         
         return RedirectToAction(nameof(Index));
     }
@@ -81,7 +88,13 @@ public class CategoryController : BaseController
             vm.Id,
             vm.Name);
         
-        await Mediator.Send(command);
+        var result = await Mediator.Send(command);
+        
+        if (result.IsError)
+        {
+            ModelState.AddValidationException(result.Error);
+            return View(vm);
+        }
         
         return RedirectToAction(nameof(Index));
     }

@@ -4,6 +4,7 @@ using Momon.Biju.App.Application.EntitiesActions.SubCategories.Commands;
 using Momon.Biju.App.Domain.Interfaces.Repositories;
 using Momon.Biju.Web.Areas.Admin.Models;
 using Momon.Biju.Web.Controllers;
+using Momon.Biju.Web.Helpers;
 using Momon.Biju.Web.Models;
 
 namespace Momon.Biju.Web.Areas.Admin.Controllers;
@@ -46,7 +47,13 @@ public class SubCategoryController : BaseController
     {
         var command = new CreateSubCategoryCommand(vm.Name);
         
-        await Mediator.Send(command);
+        var result = await Mediator.Send(command);
+        
+        if (result.IsError)
+        {
+            ModelState.AddValidationException(result.Error);
+            return View(vm);
+        }
         
         return RedirectToAction(nameof(Index));
     }

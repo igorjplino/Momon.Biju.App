@@ -10,4 +10,9 @@ public class SubCategoryRepository : BaseRepository<SubCategory>, ISubCategoryRe
     public SubCategoryRepository(MomonBijuDbContext context) : base(context)
     {
     }
+
+    public async Task<SubCategory?> GetByNameAsync(string name)
+    {
+        return await Context.SubCategories.FirstOrDefaultAsync(x => x.Name == name);
+    }
 }

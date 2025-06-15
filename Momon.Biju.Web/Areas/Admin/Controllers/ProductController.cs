@@ -128,7 +128,13 @@ public class ProductController : BaseController
             vm.SelectedCategoryId,
             vm.SelectedSubCategoriesId);
         
-        await Mediator.Send(command);
+        var result = await Mediator.Send(command);
+        
+        if (result.IsError)
+        {
+            ModelState.AddValidationException(result.Error);
+            return View(vm);
+        }
         
         return RedirectToAction("Index");
     }
@@ -191,7 +197,13 @@ public class ProductController : BaseController
             vm.SelectedCategoryId,
             vm.SelectedSubCategoriesId);
         
-        await Mediator.Send(command);
+        var result = await Mediator.Send(command);
+        
+        if (result.IsError)
+        {
+            ModelState.AddValidationException(result.Error);
+            return View(vm);
+        }
         
         return RedirectToAction("Index");
     }
