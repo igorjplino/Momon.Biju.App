@@ -13,8 +13,8 @@ public static class ConfigureService
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
+        // Validation stops on the first condition that is false for each property
         ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
-        ValidatorOptions.Global.DefaultClassLevelCascadeMode = CascadeMode.Stop;
         
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 

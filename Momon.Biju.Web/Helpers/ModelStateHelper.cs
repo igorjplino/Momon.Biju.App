@@ -12,7 +12,9 @@ public static class ModelStateHelper
             //TODO redirect to unknowing error
             //TODO log
             return;
-        } 
+        }
+        
+        modelState.Clear();
         
         foreach (var error in validationException.Errors)
         {

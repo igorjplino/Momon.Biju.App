@@ -31,6 +31,10 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .IsRequired()
             .HasMaxLength(500);
         
+        builder.Property(x => x.ReferenceNumber)
+            .IsRequired()
+            .HasMaxLength(100);
+        
         builder.HasIndex(x => x.ReferenceNumber)
             .IsUnique();
         

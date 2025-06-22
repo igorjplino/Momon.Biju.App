@@ -39,24 +39,26 @@
     </div>
 
     <div class="mb-4">
-        <label asp-for="SelectedCategoryId" class="form-label"></label>
-        <select asp-for="SelectedCategoryId" asp-items="Model.Categories" class="form-select">
+        <label asp-for="CategoryId" class="form-label"></label>
+        <select asp-for="CategoryId" asp-items="Model.CategoriesToSelect" class="form-select">
             <option value="">Selecione a categoria</option>
         </select>
-        <span asp-validation-for="SelectedCategoryId" class="text-danger"></span>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <custom-file-input prop-name="ProductImage"></custom-file-input>
+        <custom-file-input prop-name="ImagePath"></custom-file-input>
+        <span asp-validation-for="ImagePath" class="text-danger"></span>
     </div>
     
     <div class="mb-3">
-        <select multiple="multiple" size="10" name="SelectedSubCategoriesId" id="duallistbox_subcategory">
-            @foreach (var item in Model.SubCategories)
+        <select multiple="multiple" size="10" name="SubCategories" id="duallistbox_subcategory">
+            @foreach (var item in Model.SubCategoriesToSelect)
             {
                 <option value="@item.Value">@item.Text</option>
             }
-        </select>    
+        </select>
+        <span asp-validation-for="SubCategories" class="text-danger"></span>
     </div>
 
     <hr />

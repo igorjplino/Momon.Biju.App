@@ -13,10 +13,10 @@ public class EditSubCategoryCommandValidator : AbstractValidator<EditSubCategory
         _subCategoryRepository = subCategoryRepository;
         
         RuleFor(x => x.Name)
-            .NotEmpty()
-            .MinimumLength(3)
-            .MaximumLength(200)
-            .MustAsync(IsUniqueName).WithMessage("Nome da subcategoria já cadastrada");
+            .NotEmpty().WithMessage("Nome obrigatório")
+            .MinimumLength(3).WithMessage("Mínimo de 3 caracteres")
+            .MaximumLength(200).WithMessage("Máximo de 200 caracteres")
+            .MustAsync(IsUniqueName).WithMessage("Nome cadastrado");
     }
     
     private async Task<bool> IsUniqueName(EditSubCategoryCommand command, string name, CancellationToken ct)

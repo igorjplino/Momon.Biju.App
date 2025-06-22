@@ -111,9 +111,9 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
         return (products, total);
     }
 
-    public Task<Product?> GetByNameAsync(string name)
+    public async Task<Product?> GetByNameAsync(string name)
     {
-        throw new NotImplementedException();
+        return await Context.Products.FirstOrDefaultAsync(x => x.Name == name);
     }
 
     public async Task<Product?> GetToEditAsync(Guid id)

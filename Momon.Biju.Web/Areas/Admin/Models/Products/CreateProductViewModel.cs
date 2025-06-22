@@ -18,14 +18,14 @@ public class CreateProductViewModel
     public string ReferenceNumber { get; set; }
 
     [Display(Name = "Categoria")]
-    public Guid SelectedCategoryId { get; set; }
+    public Guid CategoryId { get; set; }
 
     [Display(Name = "Imagem do produto")]
-    public IFormFile? ProductImage { get; set; }
+    public IFormFile? ImagePath { get; set; }
     
     [Display(Name = "Sub Categoria")]
-    public List<Guid> SelectedSubCategoriesId { get; set; }
+    public List<Guid> SubCategories { get; set; }
     
-    public IEnumerable<SelectListItem> Categories { get; set; }
-    public IEnumerable<SelectListItem> SubCategories { get; set; }
+    public IEnumerable<SelectListItem> CategoriesToSelect { get; set; }
+    public IEnumerable<SelectListItem> SubCategoriesToSelect { get; set; }
 }

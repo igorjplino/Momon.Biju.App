@@ -13,10 +13,10 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
         _categoryRepository = categoryRepository;
         
         RuleFor(x => x.Name)
-            .NotEmpty()
-            .MinimumLength(3)
-            .MaximumLength(200)
-            .MustAsync(IsUniqueName).WithMessage("Nome da categoria já cadastrada");
+            .NotEmpty().WithMessage("Nome obrigatório")
+            .MinimumLength(3).WithMessage("Mínimo de 3 caracteres")
+            .MaximumLength(200).WithMessage("Máximo de 200 caracteres")
+            .MustAsync(IsUniqueName).WithMessage("Nome cadastrado");
     }
     
     private async Task<bool> IsUniqueName(string name, CancellationToken ct)

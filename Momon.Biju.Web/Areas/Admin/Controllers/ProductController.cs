@@ -98,12 +98,12 @@ public class ProductController : BaseController
     
         var vm = new CreateProductViewModel
         {
-            Categories = categories.Select(x => new SelectListItem
+            CategoriesToSelect = categories.Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
                 Text = x.Name
             }),
-            SubCategories = subcategories.Select(x => new SelectListItem
+            SubCategoriesToSelect = subcategories.Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
                 Text = x.Name
@@ -117,7 +117,7 @@ public class ProductController : BaseController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateProductViewModel vm)
     {
-        var imagePath = await ImageUploadHelper.SaveProductImageAsync(vm.ProductImage);
+        var imagePath = await ImageUploadHelper.SaveProductImageAsync(vm.ImagePath);
         
         var command = new CreateProductCommand(
             vm.Name,
@@ -125,14 +125,30 @@ public class ProductController : BaseController
             vm.Price,
             vm.ReferenceNumber,
             imagePath,
-            vm.SelectedCategoryId,
-            vm.SelectedSubCategoriesId);
+            vm.CategoryId,
+            vm.SubCategories);
         
         var result = await Mediator.Send(command);
         
         if (result.IsError)
         {
             ModelState.AddValidationException(result.Error);
+            
+            var categories = await _categoryRepository.GetAllAsync();
+            var subcategories = await _subCategoryRepository.GetAllAsync();
+
+            vm.CategoriesToSelect = categories.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name
+            });
+
+            vm.SubCategoriesToSelect = subcategories.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name
+            });
+            
             return View(vm);
         }
         
