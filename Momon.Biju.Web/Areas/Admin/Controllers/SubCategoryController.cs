@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Momon.Biju.App.Application.EntitiesActions.SubCategories.Commands;
 using Momon.Biju.App.Domain.Interfaces.Repositories;
@@ -9,6 +10,7 @@ using Momon.Biju.Web.Models;
 
 namespace Momon.Biju.Web.Areas.Admin.Controllers;
 
+[Authorize]
 [Area("Admin")]
 public class SubCategoryController : BaseController
 {

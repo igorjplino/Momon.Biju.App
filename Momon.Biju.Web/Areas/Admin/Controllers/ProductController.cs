@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Momon.Biju.App.Application.EntitiesActions.Produtcs.Commands;
@@ -13,6 +14,7 @@ using X.PagedList;
 
 namespace Momon.Biju.Web.Areas.Admin.Controllers;
 
+[Authorize]
 [Area("Admin")]
 public class ProductController : BaseController
 {

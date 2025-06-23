@@ -1,8 +1,11 @@
 using System.Globalization;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Momon.Biju.App.Application;
+using Momon.Biju.App.Domain.Entities.Identity;
 using Momon.Biju.App.Domain.Model;
 using Momon.Biju.App.Infra;
+using Momon.Biju.App.Infra.Contexts.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +16,31 @@ builder.Services.AddInfraServices(builder.Configuration);
 
 builder.Services.Configure<Connections>(builder.Configuration.GetSection("ConnectionStrings"));
 
-builder.Services.AddRazorPages();
+builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false;
 
+        options.Password.RequireDigit = true;
+        options.Password.RequiredLength = 8;
+        options.Password.RequireUppercase = true;
+        options.Password.RequireLowercase = true;
+        options.Password.RequireNonAlphanumeric = false;
+    })
+    .AddEntityFrameworkStores<AuthDbContext>()
+    .AddDefaultTokenProviders();
+        
+builder.Services.ConfigureApplicationCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromDays(1);
+        options.SlidingExpiration = true;
+        options.AccessDeniedPath = "/Forbidden/";
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+    });
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddRazorPages();
 builder.Services.AddMvc()
     .AddRazorRuntimeCompilation();
 
@@ -35,6 +61,8 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 // app.UseDefaultFiles();
@@ -47,6 +75,5 @@ app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();

@@ -1,25 +1,28 @@
 ﻿@model ErrorViewModel
 @{
-    ViewData["Title"] = "Error";
+    ViewBag.Title = "Erro";
+    Layout = "_Layout";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f8f9fa;">
+    <div style="text-align: center; max-width: 600px; padding: 2rem; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+        <h1 style="color: #dc3545; font-size: 2.5rem; margin-bottom: 1rem;">
+            Ups! Algo correu mal.
+        </h1>
+        <p style="color: #6c757d; font-size: 1.2rem; margin-bottom: 2rem;">
+            Pedimos desculpa pelo incómodo. Parece que ocorreu um problema do nosso lado.
+        </p>
+        <p style="color: #6c757d; font-size: 1rem; margin-bottom: 2rem;">
+            Se o problema persistir, por favor contacte a nossa equipa de suporte ou tente atualizar a página.
+        </p>
+        <button onclick="goBack()" style="padding: 0.75rem 1.5rem; font-size: 1rem; color: #fff; background-color: #007bff; border: none; border-radius: 5px; cursor: pointer;">
+            Voltar
+        </button>
+    </div>
+</div>
 
-@if (Model.ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
-}
-
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
-    It can result in displaying sensitive information from exceptions to end users.
-    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
-    and restarting the app.
-</p>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
