@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Momon.Biju.App.Domain.Entities.Identity
+@inject UserManager<AppUser> UserManager
+
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8"/>
@@ -23,26 +28,16 @@
             
             <a class="navbar-brand fw-bold" href="#">Momon.Biju</a>
 
-            @* <div class="mx-auto"> *@
-            @*     <ul class="navbar-nav"> *@
-            @*         <li class="nav-item"> *@
-            @*             <a class="nav-link" href="/">Home</a> *@
-            @*         </li> *@
-            @*         <li class="nav-item"> *@
-            @*             <a class="nav-link" href="/Products">Products</a> *@
-            @*         </li> *@
-            @*     </ul> *@
-            @* </div> *@
-
             <div class="d-flex">
-                @* @if (SignInManager.IsSignedIn(User)) *@
-                @if (true)
+                @if (User.Identity is { IsAuthenticated: true })
                 {
-                    // var user = await UserManager.GetUserAsync(User);
+                    var user = await UserManager.GetUserAsync(User);
+                    
+                    <div>Olá, @user?.DisplayName</div>
+                    
                     <div class="dropdown">
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            @* @user.UserName *@
-                            Momon
+                            Menu
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li>
@@ -75,7 +70,7 @@
 </header>
 <div class="container">
     <main role="main" class="pb-3">
-        @RenderBody()
+        @RenderBody();
     </main>
 </div>
 
