@@ -64,13 +64,19 @@
                         </ul>
                     </div>
                 }
+                else
+                {
+                    <a asp-area="Cart" asp-controller="Cart" asp-action="Index">
+                        🛒 <span id="cartCount">0</span>
+                    </a>
+                }
             </div>
         </div>
     </nav>
 </header>
 <div class="container">
     <main role="main" class="pb-3">
-        @RenderBody();
+        @RenderBody()
     </main>
 </div>
 

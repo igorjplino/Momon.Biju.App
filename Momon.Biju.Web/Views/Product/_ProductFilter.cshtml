@@ -1,28 +1,32 @@
-@model ProductFilterDto
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Momon.Biju.Web.Dtos.FilterProductsInListDto
 
-@using (Html.BeginForm("Filter", "Product", FormMethod.Get, new { id = "filter-form" }))
-{
+<form id="filter-products-form" method="get" asp-controller="Product" asp-action="Index">
+
+    <input type="hidden" asp-for="PageSize" />
+    
     <div class="card p-3 mb-3">
         <h5>Filtrar Produtos</h5>
-
-        <div class="form-group">
-            <label>Buscar</label>
-            <input type="text" name="SearchNae" class="form-control"
-                   value="@Model.Name"/>
+        
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control"/>
         </div>
 
-        <div class="form-group mt-2">
-            <label>Categorias</label>
+        <div class="mb-4">
+            <label asp-for="SelectedCategoryId" class="form-label"></label>
+            <select asp-for="SelectedCategoryId" asp-items="Model.Categories" class="form-select">
+                <option value="">Categoria</option>
+            </select>
+        </div>
 
-            @foreach (var cat in Model.Categories)
-            {
-                <input class="form-check-input" type="checkbox" @(cat.Id == Model.CategoryId ? "selected" : "")>
-                <label class="form-check-label">
-                    @cat.Name
-                </label>
-            }
+        <div class="mb-4">
+            <label asp-for="SelectedSubCategoryId" class="form-label"></label>
+            <select asp-for="SelectedSubCategoryId" asp-items="Model.SubCategories" class="form-select">
+                <option value="">Subcategoria</option>
+            </select>
         </div>
 
         <button type="submit" class="btn btn-primary mt-3">Filtrar</button>
     </div>
-}
+</form>

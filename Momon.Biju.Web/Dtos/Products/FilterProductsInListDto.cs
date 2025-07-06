@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Momon.Biju.Web.Areas.Admin.Models.Products;
+namespace Momon.Biju.Web.Dtos;
 
 public class FilterProductsInListDto
 {

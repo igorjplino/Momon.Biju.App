@@ -4,8 +4,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Momon.Biju.App.Application.EntitiesActions.Produtcs.Commands;
 using Momon.Biju.App.Application.EntitiesActions.Produtcs.Queries;
 using Momon.Biju.App.Domain.Interfaces.Repositories;
+using Momon.Biju.App.Domain.Model;
+using Momon.Biju.Web.Areas.Admin.Models;
+using Momon.Biju.Web.Areas.Admin.Models.Products;
+using Momon.Biju.Web.Dtos;
+using Momon.Biju.Web.Dtos.Products;
 using Momon.Biju.Web.Helpers;
 using Momon.Biju.Web.Models;
+using Momon.Biju.Web.ViewModels.Products;
+using X.PagedList;
 
 namespace Momon.Biju.Web.Controllers;
 
@@ -25,6 +32,64 @@ public class ProductController : BaseController
         _categoryRepository = categoryRepository;
         _productRepository = productRepository;
         _subCategoryRepository = subCategoryRepository;
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> Index([FromQuery] FilterProductsInListDto? filters)
+    {
+        var query = new ListProductsQuery(new ProductFilters(
+            pageNumber: filters?.PageNumber,
+            pageSize: filters?.PageSize,
+            name: filters?.Name,
+            categoryId: filters?.SelectedCategoryId,
+            subCategoryId: filters?.SelectedSubCategoryId
+        ));
+        
+        var result = await Mediator.Send(query);
+        
+        var categories = await _categoryRepository.GetAllAsync();
+        var subcategories = await _subCategoryRepository.GetAllAsync();
+
+        var products = result.Value.Items
+            .Select(x => new ProductInListDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Description = x.Description,
+                Price = x.Price,
+                ImagePath = x.ImagePath,
+                Category = new CategoryViewModel
+                {
+                    Id = x.CategoryId,
+                    Name = x.Category.Name
+                }
+            });
+        
+        var productsPaged  = new StaticPagedList<ProductInListDto>(products, result.Value.PageNumber, result.Value.PageSize, result.Value.Total);
+        
+        var vm = new ListProductsToOrderViewModel()
+        {
+            Products = productsPaged,
+            Filter = new FilterProductsInListDto
+            {
+                SelectedCategoryId = query.Filters?.CategoryId,
+                SelectedSubCategoryId = query.Filters?.SubCategoryId,
+                Categories = categories.Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name
+                }),
+                SubCategories = subcategories.Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name
+                }),
+                PageSize = result.Value.PageSize,
+                PageNumber = result.Value.PageNumber
+            }
+        };
+
+        return View(vm);
     }
 
     // public async Task<IActionResult> Index(ListProductsQuery query)

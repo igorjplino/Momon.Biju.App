@@ -1,45 +1,61 @@
-@* @model ListProductViewModel *@
-@* *@
-@* @{ *@
-@*     ViewBag.Title = "Bijouterias"; *@
-@*     Layout = "_Layout"; *@
-@* } *@
-@* *@
-@* @section Styles { *@
-@*     <link rel="stylesheet" href="~/css/product.css" /> *@
-@* } *@
-@* *@
-@* <div class="row"> *@
-@*     <div class="col-md-3"> *@
-@*         @await Html.PartialAsync("_ProductFilter", Model.FiltersDto) *@
-@*     </div> *@
-@* *@
-@*     <div class="col-md-9"> *@
-@*         <div class="d-flex justify-content-between align-items-center mb-3"> *@
-@*             <a href="@Url.Action("CreateProduct", "Product")" class="btn btn-success"> *@
-@*                 <i class="bi bi-plus-lg"></i> Create Product *@
-@*             </a> *@
-@*             <div> *@
-@*                 Pagination... *@
-@*             </div> *@
-@*         </div> *@
-@*         <hr/> *@
-@*         <div id="product-list"> *@
-@*             @await Html.PartialAsync("_ProductList", Model.Products) *@
-@*         </div> *@
-@*     </div> *@
-@* </div> *@
-@* *@
-@* @section Scripts { *@
-@*     <script> *@
-@*         $(function () { *@
-@*             $("#filter-form").on("submit", function (e) { *@
-@*                 e.preventDefault(); *@
-@* *@
-@*                 $.get("@Url.Action("Filter", "Product")", $(this).serialize(), function (data) { *@
-@*                     $("#product-list").html(data); *@
-@*                 }); *@
-@*             }); *@
-@*         }); *@
-@*     </script> *@
-@* } *@
+@* @using Microsoft.AspNetCore.Mvc.TagHelpers *@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using X.PagedList.Mvc.Core
+@model Momon.Biju.Web.ViewModels.Products.ListProductsToOrderViewModel
+
+@{
+    ViewBag.Title = "Bijouterias";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/product.css" />
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @await Html.PartialAsync("_ProductFilter", Model.Filter)
+    </div>
+
+    <div class="col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-center mt-4">
+                @Html.PagedListPager(Model.Products, PageNumber => Url.Action("Index", new
+                    {
+                        PageNumber,
+                        Name = Model.Filter.Name,
+                        SelectedCategoryId = Model.Filter.SelectedCategoryId,
+                        SelectedSubCategoryId = Model.Filter.SelectedSubCategoryId
+                    }),
+                    new PagedListRenderOptions
+                    {
+                        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                        DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                        DisplayLinkToIndividualPages = true,
+                        MaximumPageNumbersToDisplay = 5,
+                        UlElementClasses = ["pagination"],
+                        LiElementClasses = ["page-item"],
+                        PageClasses = ["page-link"]
+                    }
+                )
+            </div>
+        </div>
+        <hr/>
+        <div id="product-list-container">
+            <div class="row">
+                @foreach (var product in Model.Products)
+                {
+                    <div class="col-md-4 mb-4">
+                        @await Html.PartialAsync("_ProductCard", product)
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/shop.js"></script>
+}

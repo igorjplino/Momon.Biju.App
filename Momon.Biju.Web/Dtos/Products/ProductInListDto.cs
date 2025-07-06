@@ -1,4 +1,6 @@
-namespace Momon.Biju.Web.Areas.Admin.Models.Products;
+using Momon.Biju.Web.Areas.Admin.Models;
+
+namespace Momon.Biju.Web.Dtos.Products;
 
 public class ProductInListDto
 {
