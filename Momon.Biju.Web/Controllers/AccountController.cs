@@ -19,10 +19,12 @@ public class AccountController : BaseController
 
     public IActionResult Login(string? returnUrl = null)
     {
+        ViewData["ReturnUrl"] = returnUrl;
         return View();
     }
     
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(LoginViewModel vm, string? returnUrl = null)
     {
         ViewData["ReturnUrl"] = returnUrl;
@@ -71,7 +73,7 @@ public class AccountController : BaseController
 
         if (result.Succeeded)
         {
-            return RedirectToAction("Login", "Account", new { area = "Admin" });
+            return RedirectToAction("Login");
         }
         
         foreach (var error in result.Errors)
