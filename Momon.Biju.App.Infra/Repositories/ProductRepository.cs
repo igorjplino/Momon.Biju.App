@@ -123,6 +123,16 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
             includes: source => source
                 .Include(x => x.SubCategories));
     }
+    
+    public async Task<Product?> GetToDetailsAsync(Guid id)
+    {
+        return await GetAsync(
+            expression: x => x.Id == id,
+            includes: source => source
+                .Include(x => x.Category)
+                .Include(x => x.SubCategories)
+                    .ThenInclude(x => x.SubCategory));
+    }
 
     public async Task UpdateProductAsync(Product product)
     {

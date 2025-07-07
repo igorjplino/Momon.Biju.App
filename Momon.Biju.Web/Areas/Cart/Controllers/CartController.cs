@@ -28,14 +28,14 @@ public class CartController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddToCart(Guid productId)
+    public async Task<IActionResult> AddToCart(Guid productId, int? quantity)
     {
         var cart = CartCookieManager.GetCart(HttpContext);
         
         var existingItem = cart.FirstOrDefault(i => i.ProductId == productId);
         if (existingItem is not null)
         {
-            existingItem.Quantity++;
+            existingItem.Quantity += quantity ?? 1;
         }
         else
         {
@@ -52,7 +52,7 @@ public class CartController : BaseController
             {
                 ProductId = productId,
                 ProductName = product.Name,
-                Quantity = 1,
+                Quantity = quantity ?? 1,
                 Price = product.Price
             });
         }

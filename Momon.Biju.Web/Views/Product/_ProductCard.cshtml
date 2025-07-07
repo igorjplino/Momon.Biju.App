@@ -20,7 +20,7 @@
             <a onclick="addToCart('@Model.Id')" class="btn btn-sm btn-outline-primary w-100" tooltips="Adicionar ao carrinho">
                 <i class="fa fa-cart-plus me-1"></i>
             </a>
-            <a href="#" class="btn btn-sm btn-primary w-100">
+            <a asp-controller="Product" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-sm btn-primary w-100">
                 Detalhes
             </a>
         </div>

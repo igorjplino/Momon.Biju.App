@@ -1,0 +1,53 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Momon.Biju.Web.ViewModels.Products.DetailsProductViewModel
+
+@{
+    ViewBag.Title = "Detalhes";
+    Layout = "_Layout";
+}
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">@Model.Name</h1>
+        </div>
+        <div class="card-body d-flex flex-column justify-content-between p-3">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid mb-3" style="max-width: 300px;"/>
+                </div>
+
+                <div class="col-md-8">
+                    <p><strong>Descrição:</strong> @Model.Description</p>
+                    <p><strong>Preço:</strong> $@Model.Price</p>
+                    <p><strong>Categoria:</strong> @Model.CategoryName</p>
+                    <p><strong>Subcategorias:</strong> @string.Join(", ", Model.SubCategories)</p>
+                    
+                    <div class="row g-3">
+                        <div class="col-auto">
+                            <label for="quantity" class="form-label">Quantidade:</label>
+                            <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-control"/>
+                        </div>
+                        <div class="col-auto align-self-end">
+                            <button onclick="addToCartWithQuantity('@Model.Id')" class="btn btn-primary">Adicionar ao carrinho</button>
+                        </div>    
+                    </div>
+                    
+                    <a asp-controller="Product" asp-action="Index" class="btn btn-secondary mt-3">Continuar a comprar</a>
+                </div>    
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/shop.js"></script>
+    <script>
+        function addToCartWithQuantity(productId) {
+           let quantity = document.getElementById("quantity").value;
+
+            addToCart(productId, quantity);
+        }
+    </script>
+}

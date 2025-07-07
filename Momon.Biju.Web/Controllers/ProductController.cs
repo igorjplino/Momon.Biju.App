@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -89,6 +90,34 @@ public class ProductController : BaseController
             }
         };
 
+        return View(vm);
+    }
+
+    public async Task<IActionResult> Details(Guid? id)
+    {
+        if (id is null)
+        {
+            return NotFound();
+        }
+        
+        var product = await _productRepository.GetToDetailsAsync(id.Value);
+
+        if (product is null)
+        {
+            return NotFound();
+        }
+        
+        var vm = new DetailsProductViewModel
+        {
+            Id = product.Id,
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price,
+            ImageUrl = product.ImagePath,
+            CategoryName = product.Category.Name,
+            SubCategories = product.SubCategories.Select(x => x.SubCategory.Name).ToList()
+        };
+        
         return View(vm);
     }
 

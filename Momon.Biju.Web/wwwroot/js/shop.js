@@ -19,12 +19,13 @@ function updateCartCount() {
     });
 }
 
-function addToCart(productId) {
+function addToCart(productId, quantity) {
     $.ajax({
         url: '/Cart/Cart/AddToCart/AddToCart', // Replace 'YourController' with your actual controller name
         type: 'POST',
         data: { 
             productId: productId,
+            quantity: quantity
             //__RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
         },
         success: function(response) {
