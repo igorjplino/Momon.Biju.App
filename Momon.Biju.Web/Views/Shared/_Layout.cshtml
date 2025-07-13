@@ -89,6 +89,11 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 
+@if (User.Identity is { IsAuthenticated: false })
+{
+    <script src="~/js/shop.js"></script>
+}
+
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

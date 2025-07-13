@@ -1,0 +1,60 @@
+@model List<Momon.Biju.Web.Areas.Cart.Models.CartItem>
+
+@if (Model.Count <= 0)
+{
+    <div class="alert alert-info">
+        Seu carrinho está vazio
+    </div>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th scope="col">Produto</th>
+            <th scope="col">Quantidade</th>
+            <th scope="col">Preço</th>
+            <th scope="col">Total</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                <a asp-area="" asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId">
+                    @item.ProductName
+                </a>
+            </td>
+            <td>
+                <div class="quantity-control" data-product-id="@item.ProductId">
+                    <a onclick="updateCart('@item.ProductId', -1)" class="btn btn-sm">
+                        <i class="fa-solid fa-minus"></i>
+                    </a>
+                    <span class="quantity-value">@item.Quantity</span>
+                    <a onclick="updateCart('@item.ProductId', 1)" class="btn btn-sm">
+                        <i class="fa-solid fa-plus"></i>
+                    </a>
+                </div>
+            </td>
+            <td>@item.Price.ToString("C")</td>
+            <td>@(item.Price * item.Quantity)</td>
+            <td>
+                <a onclick="removeFromCart('@item.ProductId', -1)" class="btn btn-sm">
+                    <i class="fa-solid fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+        }
+        </tbody>
+    </table>
+
+    <div>
+        Total da compra: <span id="cartPurchaseTotal">@Model.Sum(x => x.Quantity * x.Price).ToString("C")</span>
+    </div>
+
+    <a asp-area="Cart" asp-controller="Cart" asp-action="Clear" class="btn btn-danger mt-3">
+        Clear Cart
+    </a>   
+}

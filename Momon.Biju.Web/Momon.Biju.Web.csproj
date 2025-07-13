@@ -26,6 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Areas\Cart\Views\Shared\" />
       <Folder Include="wwwroot\images\products\" />
     </ItemGroup>
 
@@ -33,6 +34,10 @@
       <AdditionalFiles Include="Areas\Admin\Views\SubCategory\Create.cshtml" />
       <AdditionalFiles Include="Areas\Admin\Views\SubCategory\Edit.cshtml" />
       <AdditionalFiles Include="Areas\Admin\Views\SubCategory\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Areas\Cart\Views\Components\FinishPurchase.cshtml" />
     </ItemGroup>
 
 </Project>

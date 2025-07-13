@@ -23,14 +23,20 @@ public class CartController : BaseController
     [HttpGet]
     public IActionResult Index()
     {
-        var cart = CartCookieManager.GetCart(HttpContext);
-        return View(cart);
+        var cart = HttpContext.GetCart();
+
+        var vm = new CartViewModel
+        {
+            Items = cart
+        };
+            
+        return View(vm);
     }
 
     [HttpPost]
     public async Task<IActionResult> AddToCart(Guid productId, int? quantity)
     {
-        var cart = CartCookieManager.GetCart(HttpContext);
+        var cart = HttpContext.GetCart();
         
         var existingItem = cart.FirstOrDefault(i => i.ProductId == productId);
         if (existingItem is not null)
@@ -57,27 +63,84 @@ public class CartController : BaseController
             });
         }
         
-        CartCookieManager.SaveCart(HttpContext, cart);
+        HttpContext.SaveCart(cart);
         
         return Json(new { success = true, cartCount = cart.Sum(i => i.Quantity) });
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> UpdateCart(Guid productId, int quantity)
+    {
+        var cart = HttpContext.GetCart();
+        
+        var existingItem = cart.FirstOrDefault(i => i.ProductId == productId);
+
+        if (existingItem is not null)
+        {
+            existingItem.Quantity += quantity;
+
+            if (existingItem.Quantity <= 0)
+            {
+                cart.Remove(existingItem);
+            }
+        }
+        else
+        {
+            var product = await _productRepository.GetAsync(productId);
+
+            if (product is null)
+            {
+                return NotFound();
+            }
+            
+            cart.Add(new CartItem
+            {
+                ProductId = productId,
+                ProductName = product.Name,
+                Quantity = quantity,
+                Price = product.Price
+            });
+        }
+        
+        HttpContext.SaveCart(cart);
+
+        return PartialView("_CartItemsList", cart);
+    }
+    
+    [HttpPost]
+    public IActionResult UpdateProductQuantity(Guid productId, int change)
+    {
+        var cart = HttpContext.GetCart();
+        
+        var existingItem = cart.FirstOrDefault(i => i.ProductId == productId);
+
+        if (existingItem is null)
+        {
+            return NotFound();
+        }
+        
+        existingItem.Quantity += change;
+        
+        HttpContext.SaveCart(cart);
+
+        return PartialView("_CartItemsList", cart);
     }
     
     [HttpPost]
     public IActionResult RemoveFromCart(Guid productId)
     {
-        var cart = CartCookieManager.GetCart(HttpContext);
+        var cart = HttpContext.GetCart();
         var existingItem = cart.FirstOrDefault(i => i.ProductId == productId);
 
         if (existingItem is not null)
         {
             cart.Remove(existingItem);
-            CartCookieManager.SaveCart(HttpContext, cart);    
+            HttpContext.SaveCart(cart);
         }
         
-        return Json(new { success = true, cartCount = cart.Sum(i => i.Quantity) });
+        return PartialView("_CartItemsList", cart);
     }
     
-    [HttpPost]
     public IActionResult Clear()
     {
         CartCookieManager.ClearCart(HttpContext);
@@ -88,8 +151,12 @@ public class CartController : BaseController
     [HttpGet]
     public IActionResult CartCount()
     {
-        var cart = CartCookieManager.GetCart(HttpContext);
-        
-        return Json(new { success = true, cartCount = cart.Sum(i => i.Quantity) });
+        return Json(new { success = true, cartCount = HttpContext.CartCount() });
+    }
+    
+    [HttpGet]
+    public IActionResult CartPurchaseTotal()
+    {
+        return Json(new { success = true, cartPurchaseTotal = HttpContext.TotalPurchase().ToString("C") });
     }
 }
