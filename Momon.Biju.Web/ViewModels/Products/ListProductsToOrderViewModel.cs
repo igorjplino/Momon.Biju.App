@@ -6,6 +6,7 @@ namespace Momon.Biju.Web.ViewModels.Products;
 
 public class ListProductsToOrderViewModel
 {
-    public FilterProductsInListDto Filter { get; set; }
     public IPagedList<ProductInListDto> Products { get; set; }
+    public int PageSize { get; set; }
+    public int PageNumber { get; set; }
 }

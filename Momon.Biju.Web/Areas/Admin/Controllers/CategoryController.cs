@@ -100,10 +100,4 @@ public class CategoryController : BaseController
         
         return RedirectToAction(nameof(Index));
     }
-    
-    [HttpGet("ListCategories")]
-    public async Task<IActionResult> ListCategories()
-    {
-        return Ok(await _categoryRepository.GetAllAsync());
-    }
 }

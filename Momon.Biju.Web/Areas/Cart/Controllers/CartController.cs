@@ -2,8 +2,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Momon.Biju.App.Domain.Interfaces.Repositories;
 using Momon.Biju.Web.Areas.Cart.Models;
-using Momon.Biju.Web.Areas.Cart.Services;
 using Momon.Biju.Web.Controllers;
+using Momon.Biju.Web.CookieManagers;
 
 namespace Momon.Biju.Web.Areas.Cart.Controllers;
 
@@ -11,19 +11,22 @@ namespace Momon.Biju.Web.Areas.Cart.Controllers;
 public class CartController : BaseController
 {
     private readonly IProductRepository _productRepository;
+    private readonly CartCookieManager _cartCookieManager;
     
     public CartController(
         IMediator mediator,
-        IProductRepository productRepository)
+        IProductRepository productRepository,
+        CartCookieManager cartCookieManager)
         : base(mediator)
     {
         _productRepository = productRepository;
+        _cartCookieManager = cartCookieManager;
     }
     
     [HttpGet]
     public IActionResult Index()
     {
-        var cart = HttpContext.GetCart();
+        var cart = _cartCookieManager.GetCart();
 
         var vm = new CartViewModel
         {
@@ -36,7 +39,7 @@ public class CartController : BaseController
     [HttpPost]
     public async Task<IActionResult> AddToCart(Guid productId, int? quantity)
     {
-        var cart = HttpContext.GetCart();
+        var cart = _cartCookieManager.GetCart();
         
         var existingItem = cart.FirstOrDefault(i => i.ProductId == productId);
         if (existingItem is not null)
@@ -63,7 +66,7 @@ public class CartController : BaseController
             });
         }
         
-        HttpContext.SaveCart(cart);
+        _cartCookieManager.SaveCart(cart);
         
         return Json(new { success = true, cartCount = cart.Sum(i => i.Quantity) });
     }
@@ -71,7 +74,7 @@ public class CartController : BaseController
     [HttpPost]
     public async Task<IActionResult> UpdateCart(Guid productId, int quantity)
     {
-        var cart = HttpContext.GetCart();
+        var cart = _cartCookieManager.GetCart();
         
         var existingItem = cart.FirstOrDefault(i => i.ProductId == productId);
 
@@ -102,7 +105,7 @@ public class CartController : BaseController
             });
         }
         
-        HttpContext.SaveCart(cart);
+        _cartCookieManager.SaveCart(cart);
 
         return PartialView("_CartItemsList", cart);
     }
@@ -110,7 +113,7 @@ public class CartController : BaseController
     [HttpPost]
     public IActionResult UpdateProductQuantity(Guid productId, int change)
     {
-        var cart = HttpContext.GetCart();
+        var cart = _cartCookieManager.GetCart();
         
         var existingItem = cart.FirstOrDefault(i => i.ProductId == productId);
 
@@ -121,7 +124,7 @@ public class CartController : BaseController
         
         existingItem.Quantity += change;
         
-        HttpContext.SaveCart(cart);
+        _cartCookieManager.SaveCart(cart);
 
         return PartialView("_CartItemsList", cart);
     }
@@ -129,13 +132,13 @@ public class CartController : BaseController
     [HttpPost]
     public IActionResult RemoveFromCart(Guid productId)
     {
-        var cart = HttpContext.GetCart();
+        var cart = _cartCookieManager.GetCart();
         var existingItem = cart.FirstOrDefault(i => i.ProductId == productId);
 
         if (existingItem is not null)
         {
             cart.Remove(existingItem);
-            HttpContext.SaveCart(cart);
+            _cartCookieManager.SaveCart(cart);
         }
         
         return PartialView("_CartItemsList", cart);
@@ -143,7 +146,7 @@ public class CartController : BaseController
     
     public IActionResult Clear()
     {
-        CartCookieManager.ClearCart(HttpContext);
+        _cartCookieManager.ClearCart();
         
         return RedirectToAction("Index");
     }
@@ -151,12 +154,12 @@ public class CartController : BaseController
     [HttpGet]
     public IActionResult CartCount()
     {
-        return Json(new { success = true, cartCount = HttpContext.CartCount() });
+        return Json(new { success = true, cartCount = _cartCookieManager.CartCount() });
     }
     
     [HttpGet]
     public IActionResult CartPurchaseTotal()
     {
-        return Json(new { success = true, cartPurchaseTotal = HttpContext.TotalPurchase().ToString("C") });
+        return Json(new { success = true, cartPurchaseTotal = _cartCookieManager.TotalPurchase().ToString("C") });
     }
 }

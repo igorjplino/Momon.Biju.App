@@ -1,9 +1,7 @@
-@model Momon.Biju.Web.Dtos.FilterProductsInListDto
+@model Momon.Biju.Web.Dtos.Products.FilterProductsInListDto
 
 <form id="filter-products-form" method="get" asp-area="Admin" asp-controller="Product" asp-action="Index">
 
-    <input type="hidden" asp-for="PageSize" />
-    
     <div class="card p-3 mb-3">
         <h5>Filtrar Produtos</h5>
         
@@ -15,14 +13,14 @@
         <div class="mb-4">
             <label asp-for="SelectedCategoryId" class="form-label"></label>
             <select asp-for="SelectedCategoryId" asp-items="Model.Categories" class="form-select">
-                <option value="">Categoria</option>
+                <option value="">Todas</option>
             </select>
         </div>
 
         <div class="mb-4">
             <label asp-for="SelectedSubCategoryId" class="form-label"></label>
             <select asp-for="SelectedSubCategoryId" asp-items="Model.SubCategories" class="form-select">
-                <option value="">Subcategoria</option>
+                <option value="">Todas</option>
             </select>
         </div>
 

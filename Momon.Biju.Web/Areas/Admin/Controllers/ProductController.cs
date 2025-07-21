@@ -37,11 +37,11 @@ public class ProductController : BaseController
     }
     
     [HttpGet]
-    public async Task<IActionResult> Index([FromQuery] FilterProductsInListDto? filters)
+    public async Task<IActionResult> Index([FromQuery] FilterProductsInListDto? filters, [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
     {
         var query = new ListProductsQuery(new ProductFilters(
-            pageNumber: filters?.PageNumber,
-            pageSize: filters?.PageSize,
+            pageNumber: pageNumber,
+            pageSize: pageSize,
             name: filters?.Name,
             categoryId: filters?.SelectedCategoryId,
             subCategoryId: filters?.SelectedSubCategoryId
@@ -85,9 +85,7 @@ public class ProductController : BaseController
                 {
                     Value = x.Id.ToString(),
                     Text = x.Name
-                }),
-                PageSize = result.Value.PageSize,
-                PageNumber = result.Value.PageNumber
+                })
             }
         };
 

@@ -1,5 +1,3 @@
-using Momon.Biju.Web.Areas.Cart.Services;
-
 namespace Momon.Biju.Web.Areas.Cart.Models;
 
 public class CartViewModel

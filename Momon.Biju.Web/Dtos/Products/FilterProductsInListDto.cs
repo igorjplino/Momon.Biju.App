@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Momon.Biju.Web.Dtos;
+namespace Momon.Biju.Web.Dtos.Products;
 
 public class FilterProductsInListDto
 {
@@ -12,9 +12,6 @@ public class FilterProductsInListDto
     [Display(Name = "Subcategoria")]
     public Guid? SelectedSubCategoryId { get; set; }
 
-    public IEnumerable<SelectListItem> Categories { get; set; }
-    public IEnumerable<SelectListItem> SubCategories { get; set; }
-    
-    public int PageSize { get; set; }
-    public int PageNumber { get; set; }
-}
+    public IEnumerable<SelectListItem>? Categories { get; set; }
+    public IEnumerable<SelectListItem>? SubCategories { get; set; }
+} 

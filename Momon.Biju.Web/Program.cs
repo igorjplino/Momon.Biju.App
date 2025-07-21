@@ -6,6 +6,7 @@ using Momon.Biju.App.Domain.Entities.Identity;
 using Momon.Biju.App.Domain.Model;
 using Momon.Biju.App.Infra;
 using Momon.Biju.App.Infra.Contexts.Auth;
+using Momon.Biju.Web.CookieManagers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfraServices(builder.Configuration);
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddDataProtection();
+builder.Services.AddScoped<CartCookieManager>();
+builder.Services.AddScoped<FilterProductsCookieManager>();
 
 builder.Services.Configure<Connections>(builder.Configuration.GetSection("ConnectionStrings"));
 
