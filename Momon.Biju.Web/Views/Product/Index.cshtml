@@ -10,9 +10,17 @@
     <link rel="stylesheet" href="~/css/product.css" />
 }
 
-<div class="row">
-    <div class="col-md-3">
-        @await Component.InvokeAsync("FilterProducts")
+<div class="row mt-2">
+    <div class="col-md-3 mt-3">
+        <!-- Mobile (accordion, collapsed by default) -->
+        <div class="d-md-none mb-3">
+            @await Component.InvokeAsync("FilterProducts", new { isMobile = true })
+        </div>
+
+        <!-- Desktop (always expanded) -->
+        <div class="d-none d-md-block mb-3">
+            @await Component.InvokeAsync("FilterProducts", new { isMobile = false })
+        </div>
     </div>
 
     <div class="col-md-9">
@@ -42,7 +50,7 @@
             <div class="row">
                 @foreach (var product in Model.Products)
                 {
-                    <div class="col-md-4 mb-4">
+                    <div class="col-6 col-md-4 mb-4">
                         @await Html.PartialAsync("_ProductCard", product)
                     </div>
                 }

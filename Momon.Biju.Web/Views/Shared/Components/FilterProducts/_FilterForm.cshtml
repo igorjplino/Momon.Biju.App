@@ -1,0 +1,24 @@
+@model Momon.Biju.Web.Dtos.Products.FilterProductsInListDto
+
+<form method="get" asp-area="" asp-controller="Product" asp-action="Index">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+
+    <div class="mb-4">
+        <label asp-for="SelectedCategoryId" class="form-label"></label>
+        <select asp-for="SelectedCategoryId" asp-items="Model.Categories" class="form-select">
+            <option value="">Todas</option>
+        </select>
+    </div>
+
+    <div class="mb-4">
+        <label asp-for="SelectedSubCategoryId" class="form-label"></label>
+        <select asp-for="SelectedSubCategoryId" asp-items="Model.SubCategories" class="form-select">
+            <option value="">Todas</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Filtrar</button>
+</form>

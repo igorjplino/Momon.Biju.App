@@ -22,8 +22,10 @@ public class FilterProductsViewComponent : ViewComponent
         _filterProductsCookieManager = filterProductsCookieManager;
     }
     
-    public async Task<IViewComponentResult> InvokeAsync()
+    public async Task<IViewComponentResult> InvokeAsync(bool isMobile)
     {
+        ViewData["IsMobile"] = isMobile;
+        
         FilterProductsInListDto? filter = _filterProductsCookieManager.GetFilters();
 
         filter ??= new FilterProductsInListDto();
