@@ -9,7 +9,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     
-    <title>@ViewData["Title"] - Momon.Biju.Web</title>
+    <title>@ViewData["Title"] - Momon Biju</title>
     
     <script type="importmap"></script>
     
@@ -21,7 +21,7 @@
 
     @await RenderSectionAsync("Styles", required: false)
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm px-4">
         <div class="container-fluid">
@@ -68,25 +68,36 @@
                 }
                 else
                 {
-                    <a asp-area="Cart" asp-controller="Cart" asp-action="Index">
-                        🛒 <span id="cartCount">0</span>
+                    <a asp-area="Cart" asp-controller="Cart" asp-action="Index" class="position-relative text-decoration-none me-3">
+                        <i class="fas fa-shopping-cart fa-lg"></i>
+                        <span id="cartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0 <span class="visually-hidden">items in cart</span>
+                        </span>
                     </a>
+
                 }
             </div>
         </div>
     </nav>
 </header>
-<div class="container">
-    <main role="main" class="pb-3">
+<div class="container mt-4">
+    <main role="main" class="pb-3 flex-grow-1">
         @RenderBody()
     </main>
 </div>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2025 - Momon.Biju.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+<footer class="footer mt-auto py-3 bg-light border-top shadow-sm">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center text-muted">
+        <div>
+            &copy; 2025 <strong>Momon Biju</strong>. Todos os direitos reservados.
+        </div>
+        @* <div> *@
+        @*     <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none text-muted me-3">Política de Privacidade</a> *@
+        @*     <a href="mailto:contato@momon.biju" class="text-decoration-none text-muted">Contato</a> *@
+        @* </div> *@
     </div>
 </footer>
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>

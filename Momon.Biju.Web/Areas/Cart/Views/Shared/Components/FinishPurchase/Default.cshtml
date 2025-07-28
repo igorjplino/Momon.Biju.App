@@ -1,4 +1,4 @@
-@model Momon.Biju.Web.Models.DetailsToPurchase
+@model Momon.Biju.Web.Areas.Cart.Models.DetailsToPurchase
 
 <form asp-area="Cart" asp-controller="Cart" asp-action="FinishPurchase" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -17,5 +17,11 @@
 
     <hr />
 
-    <input type="submit" value="Finalizar a compra" class="btn btn-success" />
+    <div class="d-grid gap-2">
+        <input type="submit" value="Finalizar a compra" class="btn btn-success" @(@Model.CanPurchase ? "" : "disabled") />
+
+        <a asp-controller="Product" asp-action="Index" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-arrow-left-circle"></i> Continuar comprando
+        </a>
+    </div>
 </form>

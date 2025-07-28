@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Momon.Biju.Web.Models;
+namespace Momon.Biju.Web.Areas.Cart.Models;
 
 public class DetailsToPurchase
 {
@@ -11,4 +11,6 @@ public class DetailsToPurchase
     [MaxLength(100)]
     [Display(Name = "Informações adicionais")]
     public string Comments { get; set; }
+
+    public bool CanPurchase { get; set; }
 }

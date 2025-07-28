@@ -1,3 +1,4 @@
+@using Momon.Biju.Web.Areas.Cart.Models
 @model Momon.Biju.Web.Areas.Cart.Models.CartViewModel
 
 @{
@@ -5,25 +6,25 @@
     Layout = "_Layout";
 }
 
-<div class="container mt-4">
-    <h2 class="mb-4">Seu carrinho de compras</h2>
+<div class="container">
+    <h2 class="mb-4 text-primary">Seu carrinho de compras</h2>
 
-    <div class="row">
-        <div class="col-md-8">
-            <div id="cartItemsContainer" class="table-responsive">
-                @await Html.PartialAsync("_CartItemsList", @Model.Items)
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div id="cartItemsContainer" class="table-responsive mb-4">
+                @await Html.PartialAsync("_CartItemsList", Model.Items)
             </div>
-            <a asp-area="" asp-controller="Product" asp-action="Index" class="btn btn-info">
-                Continuar a comprar
-            </a>
         </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body d-flex flex-column justify-content-between p-3">
-                    <h5 class="card-title">Resumo da compra</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Informe seus dados para concluir a compra</h6>
 
-                    @await Component.InvokeAsync("FinishPurchase")
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Resumo da compra</h5>
+                    <p class="card-text text-muted mb-4">
+                        Informe seus dados para concluir a compra
+                    </p>
+
+                    @await Component.InvokeAsync("FinishPurchase", new DetailsToPurchase { CanPurchase = Model.Items.Any()})
                 </div>
             </div>
         </div>
