@@ -1,18 +1,15 @@
-﻿@{
-    ViewBag.Title = "Erro";
+@{
+    ViewBag.Title = "Acesso Negado";
     Layout = "_Layout";
 }
 
 <div style="display: flex; justify-content: center; align-items: center;">
     <div style="text-align: center; max-width: 600px; padding: 2rem; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 10px;">
-        <h1 style="color: #dc3545; font-size: 2.5rem; margin-bottom: 1rem;">
-            Ups! Algo correu mal.
+        <h1 style="color: #ffc107; font-size: 2.5rem; margin-bottom: 1rem;">
+            Acesso Negado
         </h1>
         <p style="color: #6c757d; font-size: 1.2rem; margin-bottom: 2rem;">
-            Pedimos desculpa pelo incomodo. Parece que ocorreu um problema do nosso lado.
-        </p>
-        <p style="color: #6c757d; font-size: 1rem; margin-bottom: 2rem;">
-            Se o problema persistir, por favor entre em contato com a nossa equipe ou tente mais tarde.
+            Você não tem permissão para acessar esta página ou recurso.
         </p>
         <button onclick="goBack()" style="padding: 0.75rem 1.5rem; font-size: 1rem; color: #fff; background-color: #007bff; border: none; border-radius: 5px; cursor: pointer;">
             Voltar
@@ -25,3 +22,4 @@
         window.history.back();
     }
 </script>
+

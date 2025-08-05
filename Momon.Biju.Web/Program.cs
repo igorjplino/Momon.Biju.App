@@ -7,8 +7,13 @@ using Momon.Biju.App.Domain.Model;
 using Momon.Biju.App.Infra;
 using Momon.Biju.App.Infra.Contexts.Auth;
 using Momon.Biju.Web.CookieManagers;
+using Momon.Biju.Web.Middlewares;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -46,8 +51,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddRazorPages();
-builder.Services.AddMvc()
+builder.Services
+    .AddMvc()
     .AddRazorRuntimeCompilation();
 
 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("pt-BR");
@@ -55,11 +60,16 @@ ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("pt-BR");
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging();
+
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -71,7 +81,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// app.UseDefaultFiles();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllerRoute(
     name: "areas",

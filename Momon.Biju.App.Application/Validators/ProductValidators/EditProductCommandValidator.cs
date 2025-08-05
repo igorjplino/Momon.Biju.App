@@ -42,8 +42,10 @@ public class EditProductCommandValidator : AbstractValidator<EditProductCommand>
             .NotEmpty().WithMessage("Categoria obrigatória")
             .SetValidator(new EntityMustExistsValidator<Category>(categoryRepository));
 
+        RuleFor(x => x.SubCategories)
+            .NotEmpty().WithMessage("Selecionar ao menos uma subcategoria");
+        
         RuleForEach(x => x.SubCategories)
-            .NotEmpty().WithMessage("Selecionar ao menos uma subcategoria")
             .SetValidator(new EntityMustExistsValidator<SubCategory>(subCategoryRepository)).WithMessage("Subcategorias inválidas: {PropertyName}");
     }
     
@@ -51,6 +53,6 @@ public class EditProductCommandValidator : AbstractValidator<EditProductCommand>
     {
         var product = await _productRepository.GetByNameAsync(name);
 
-        return product is null || command.ProductId != product.Id;
+        return product is null || command.ProductId == product.Id;
     }
 }

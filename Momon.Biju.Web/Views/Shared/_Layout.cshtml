@@ -27,43 +27,47 @@
         <div class="container-fluid">
             
             <a asp-area="" asp-controller="Product" asp-action="Index" class="navbar-brand fw-bold">
-                Momon.Biju
+                Momon Biju
             </a>
 
             <div class="d-flex">
                 @if (User.Identity is { IsAuthenticated: true })
                 {
                     var user = await UserManager.GetUserAsync(User);
-                    
-                    <div>Olá, @user?.DisplayName</div>
-                    
-                    <div class="dropdown">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Menu
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li>
-                                <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-success">
-                                    <i class="bi bi-plus-lg"></i>Produtos
-                                </a>
-                            </li>
-                            <li>
-                                <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="btn btn-success">
-                                    <i class="bi bi-plus-lg"></i>Categorias
-                                </a>
-                            </li>
-                            <li>
-                                <a asp-area="Admin" asp-controller="SubCategory" asp-action="Index" class="btn btn-success">
-                                    <i class="bi bi-plus-lg"></i>Sub-Categorias
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form method="post" asp-area="" asp-controller="Account" asp-action="Logout" class="px-3">
-                                    <button type="submit" class="btn btn-link dropdown-item">Logout</button>
-                                </form>
-                            </li>
-                        </ul>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="fw-semibold">Olá, @user?.DisplayName</span>
+
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Menu
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li>
+                                    <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="dropdown-item">
+                                        <i class="bi bi-box-seam me-2"></i> Produtos
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="dropdown-item">
+                                        <i class="bi bi-tags me-2"></i> Categorias
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-area="Admin" asp-controller="SubCategory" asp-action="Index" class="dropdown-item">
+                                        <i class="bi bi-tag me-2"></i> Sub-Categorias
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li>
+                                    <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            <i class="bi bi-box-arrow-right me-2"></i> Logout
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 }
                 else
@@ -71,7 +75,7 @@
                     <a asp-area="Cart" asp-controller="Cart" asp-action="Index" class="position-relative text-decoration-none me-3">
                         <i class="fas fa-shopping-cart fa-lg"></i>
                         <span id="cartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            0 <span class="visually-hidden">items in cart</span>
+                            0 <span class="visually-hidden">Produtos no carrinho</span>
                         </span>
                     </a>
 

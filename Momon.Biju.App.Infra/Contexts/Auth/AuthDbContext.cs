@@ -14,7 +14,6 @@ public class AuthDbContext : IdentityDbContext<AppUser>
     {
         base.OnModelCreating(builder);
 
-        // Move Identity tables to 'auth' schema
         foreach (var entity in builder.Model.GetEntityTypes())
         {
             if (entity.ClrType.Namespace is not null && 

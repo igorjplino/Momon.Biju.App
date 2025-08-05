@@ -48,7 +48,7 @@ public class ProductController : BaseController
         ));
         
         var result = await Mediator.Send(query);
-        
+
         var categories = await _categoryRepository.GetAllAsync();
         var subcategories = await _subCategoryRepository.GetAllAsync();
 
@@ -134,6 +134,8 @@ public class ProductController : BaseController
         
         if (result.IsError)
         {
+            ImageUploadHelper.DeleteImageIfExists(imagePath);
+            
             ModelState.AddValidationException(result.Error);
             
             var categories = await _categoryRepository.GetAllAsync();
@@ -182,14 +184,14 @@ public class ProductController : BaseController
             Price = product.Price,
             ReferenceNumber = product.ReferenceNumber,
             CurrentProductImage = product.ImagePath,
-            SelectedCategoryId = product.CategoryId,
-            SelectedSubCategoriesId = product.SubCategories.Select(x => x.SubCategoryId),
-            Categories = categories.Select(x => new SelectListItem
+            CategoryId = product.CategoryId,
+            SubCategories = product.SubCategories.Select(x => x.SubCategoryId),
+            CategoriesToSelect = categories.Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
                 Text = x.Name
             }),
-            SubCategories = subcategories.Select(x => new SelectListItem
+            SubCategoriesToSelect = subcategories.Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
                 Text = x.Name
@@ -212,14 +214,32 @@ public class ProductController : BaseController
             vm.Price,
             vm.ReferenceNumber,
             imagePath ?? vm.CurrentProductImage,
-            vm.SelectedCategoryId,
-            vm.SelectedSubCategoriesId);
+            vm.CategoryId,
+            vm.SubCategories);
         
         var result = await Mediator.Send(command);
         
         if (result.IsError)
         {
+            ImageUploadHelper.DeleteImageIfExists(imagePath);
+            
             ModelState.AddValidationException(result.Error);
+            
+            var categories = await _categoryRepository.GetAllAsync();
+            var subcategories = await _subCategoryRepository.GetAllAsync();
+
+            vm.CategoriesToSelect = categories.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name
+            });
+
+            vm.SubCategoriesToSelect = subcategories.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name
+            });
+            
             return View(vm);
         }
         

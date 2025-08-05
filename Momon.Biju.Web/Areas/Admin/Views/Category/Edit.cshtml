@@ -1,33 +1,28 @@
 @model EditCategoryViewModel
 
 @{
-    ViewBag.Title = "Categorias";
+    ViewBag.Title = "Editar Categoria";
     Layout = "_Layout";
 }
 
-<div class="header">
-    <h1>Editar categoria</h1>
-</div>
+<h2 class="mb-4">Editar Categoria</h2>
 
-<div class="mb-3">
-    <form asp-action="Edit">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="Id" />
-        <div class="form-group">
-            <label asp-for="Name" class="control-label"></label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Salvar" class="btn btn-primary" />
-        </div>
-    </form>
-</div>
+<form asp-action="Edit" class="needs-validation" novalidate>
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+    <input type="hidden" asp-for="Id" />
 
-<hr />
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger small"></span>
+    </div>
 
-<div>
-    <a asp-action="Index">Voltar para lista</a>
-</div>
-
-
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-success">
+            <i class="bi bi-check-lg me-1"></i> Salvar
+        </button>
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i> Voltar para lista
+        </a>
+    </div>
+</form>

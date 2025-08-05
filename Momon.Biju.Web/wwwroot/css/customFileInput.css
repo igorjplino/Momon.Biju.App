@@ -11,7 +11,7 @@
 .custom-file-label {
     display: inline-block;
     padding: 10px 15px;
-    background-color: #007BFF;
+    background-color: #858585;
     color: #fff;
     cursor: pointer;
     border-radius: 4px;
@@ -20,7 +20,7 @@
 }
 
 .custom-file-label:hover {
-    background-color: #0056b3;
+    background-color: #757575;
 }
 
 .file-name {

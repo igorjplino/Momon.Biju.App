@@ -9,8 +9,8 @@ public static class ModelStateHelper
     {
         if (exception is not ValidationException validationException)
         {
-            //TODO redirect to unknowing error
             //TODO log
+            modelState.AddModelError(string.Empty, "Ocorreu um erro inesperado. Tente novamente mais tarde.");
             return;
         }
         

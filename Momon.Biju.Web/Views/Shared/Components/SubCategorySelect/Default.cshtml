@@ -1,0 +1,17 @@
+@model IEnumerable<SelectListItem>
+
+@{
+    var fieldName = ViewData["FieldName"]?.ToString() ?? "CategoryId";
+    var label = ViewData["Label"]?.ToString() ?? "Categoria";
+}
+
+<label for="@fieldName" class="form-label">@label</label>
+<select name="@fieldName" id="@fieldName" class="form-select">
+    <option value="">Selecione a categoria</option>
+    @foreach (var item in Model)
+    {
+        <option value="@item.Value" selected="@(item.Selected ? "selected" : null)">
+            @item.Text
+        </option>
+    }
+</select>

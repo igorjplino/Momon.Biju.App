@@ -6,6 +6,7 @@ using Momon.Biju.App.Application.Common;
 using Momon.Biju.App.Application.EntitiesActions.Categories.Commands;
 using Momon.Biju.App.Application.EntitiesActions.Produtcs.Commands;
 using Momon.Biju.App.Application.EntitiesActions.SubCategories.Commands;
+using Momon.Biju.App.Domain.Entities;
 
 namespace Momon.Biju.App.Application;
 
@@ -23,7 +24,7 @@ public static class ConfigureService
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 
             cfg.AddValidationBehavior<CreateProductCommand, Guid>();
-            cfg.AddValidationBehavior<EditProductCommand, bool>();
+            cfg.AddValidationBehavior<EditProductCommand, Product>();
             
             cfg.AddValidationBehavior<CreateCategoryCommand, Guid>();
             

@@ -9,76 +9,88 @@
     <link rel="stylesheet" href="~/css/customFileInput.css" asp-append-version="true"/>
 }
 
-<h2>Editar produto</h2>
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card shadow-sm rounded">
+            <div class="card-body p-4">
+                <h2 class="mb-4 text-center">Editar Produto</h2>
 
-<form asp-action="Edit" method="post" enctype="multipart/form-data">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <form asp-action="Edit" method="post" enctype="multipart/form-data" novalidate>
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
-    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="CurrentProductImage" />
 
-    <div class="mb-3">
-        <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control"/>
-        <span asp-validation-for="Name" class="text-danger"></span>
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <textarea asp-for="Description" rows="3" class="form-control" placeholder="Descrição do produto" style="resize: none;"></textarea>
+                        <span asp-validation-for="Description" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <div class="col-md-6">
+                            <label asp-for="Price" class="form-label"></label>
+                            <input asp-for="Price" type="number" step="0.01" class="form-control" placeholder="Preço" />
+                            <span asp-validation-for="Price" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="ReferenceNumber" class="form-label"></label>
+                            <input asp-for="ReferenceNumber" class="form-control" placeholder="Referência" />
+                            <span asp-validation-for="ReferenceNumber" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CategoryId" class="form-label"></label>
+                        <select asp-for="CategoryId" asp-items="Model.CategoriesToSelect" class="form-select">
+                            <option value="">Selecione a categoria</option>
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label d-block">Imagem do Produto</label>
+                        <custom-file-input prop-name="NewProductImage" existing-image="@Url.Content(Model.CurrentProductImage)"></custom-file-input>
+                        <span asp-validation-for="NewProductImage" class="text-danger small"></span>
+                    </div>
+
+
+
+
+                    <div class="mb-4">
+                        <label class="form-label">Subcategorias</label>
+                        <select multiple size="10" name="@nameof(EditProductViewModel.SubCategories)" id="duallistbox_subcategory">
+                            @foreach (var item in Model.SubCategoriesToSelect)
+                            {
+                                if (Model.SubCategories is not null && Model.SubCategories.Any(x => x.ToString() == item.Value))
+                                {
+                                    <option value="@item.Value" selected>@item.Text</option>    
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="SubCategories" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-
-    <div class="mb-3">
-        <label asp-for="Description" class="form-label"></label>
-        <textarea asp-for="Description" style="resize:none;" rows="3" class="form-control"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Price" class="form-label"></label>
-        <input asp-for="Price" class="form-control" type="number" step="0.01"/>
-        <span asp-validation-for="Price" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="ReferenceNumber" class="form-label"></label>
-        <input asp-for="ReferenceNumber" class="form-control"/>
-        <span asp-validation-for="ReferenceNumber" class="text-danger"></span>
-    </div>
-
-    <div class="mb-4">
-        <label asp-for="SelectedCategoryId" class="form-label"></label>
-        <select asp-for="SelectedCategoryId" asp-items="Model.Categories" class="form-select">
-            <option value="">Selecione a categoria</option>
-        </select>
-        <span asp-validation-for="SelectedCategoryId" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="CurrentProductImage" class="form-label"></label>
-        <br />
-        <img src="@Model.CurrentProductImage" alt="Imagem atual" style="max-height:200px;" />
-        <input type="hidden" asp-for="CurrentProductImage" />
-        <custom-file-input prop-name="NewProductImage"></custom-file-input>
-    </div>
-    
-    <div class="mb-3">
-        <select multiple="multiple" size="10" name="SelectedSubCategoriesId" id="duallistbox_subcategory">
-            @foreach (var item in Model.SubCategories)
-            {
-                if (Model.SelectedSubCategoriesId.Any(x => x.ToString() == item.Value))
-                {
-                    <option value="@item.Value" selected>@item.Text</option>    
-                }
-                else
-                {
-                    <option value="@item.Value">@item.Text</option>
-                }
-            }
-        </select>    
-    </div>
-
-    <hr />
-
-    <div class="form-group">
-        <input type="submit" value="Salvar" class="btn btn-primary" />
-    </div>
-    <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
-</form>
+</div>
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap4-duallistbox/dist/jquery.bootstrap-duallistbox.min.js"></script>
