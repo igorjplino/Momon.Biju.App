@@ -11,8 +11,32 @@
 }
 
 <div class="row">
-    <div class="col-md-3">
-        @await Html.PartialAsync("_ProductFilter", Model.Filter)
+    <div class="col-md-3 mt-3">
+        <!-- Mobile (accordion, collapsed by default) -->
+        <div class="d-md-none mb-3">
+            <div class="accordion" id="filterAccordionMobile">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingMobile">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMobile" aria-expanded="false" aria-controls="collapseMobile">
+                            Filtrar Produtos
+                        </button>
+                    </h2>
+                    <div id="collapseMobile" class="accordion-collapse collapse" aria-labelledby="headingMobile" data-bs-parent="#filterAccordionMobile">
+                        <div class="accordion-body">
+                            @await Html.PartialAsync("_ProductFilter", Model.Filter)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Desktop (always expanded) -->
+        <div class="d-none d-md-block mb-3">
+            <h5>Filtrar Produtos</h5>
+            @await Html.PartialAsync("_ProductFilter", Model.Filter)
+        </div>
     </div>
 
     <div class="col-md-9">
@@ -49,7 +73,7 @@
             <div class="row">
                 @foreach (var product in Model.Products)
                 {
-                    <div class="col-md-4 mb-4">
+                    <div class="col-6 col-md-4 mb-4">
                         @await Html.PartialAsync("_ProductCard", product)
                     </div>
                 }
