@@ -29,6 +29,7 @@ public class ProductController : BaseController
             pageNumber: pageNumber,
             pageSize: pageSize,
             name: filters?.Name,
+            active: true,
             categoryId: filters?.SelectedCategoryId,
             subCategoryId: filters?.SelectedSubCategoryId
         ));

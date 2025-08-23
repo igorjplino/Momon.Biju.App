@@ -11,6 +11,7 @@ public record EditProductCommand(
     string Description,
     decimal Price,
     string ReferenceNumber,
+    bool Active,
     string ImagePath,
     Guid CategoryId,
     IEnumerable<Guid> SubCategories)
@@ -36,6 +37,7 @@ public class UpdateProductCommandHandler : IRequestHandler<EditProductCommand, R
             Description = request.Description,
             Price = request.Price,
             ReferenceNumber = request.ReferenceNumber,
+            Active = request.Active,
             ImagePath = request.ImagePath,
             CategoryId = request.CategoryId,
             SubCategories = request.SubCategories.Select(x => new ProductSubCategory

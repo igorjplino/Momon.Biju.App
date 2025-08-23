@@ -20,6 +20,9 @@ public class EditProductViewModel
 
     [Display(Name = "Categoria")]
     public Guid CategoryId { get; set; }
+    
+    [Display(Name = "Ativo")]
+    public bool Active { get; set; }
 
     [Display(Name = "Imagem do produto")] 
     public string CurrentProductImage { get; set; }

@@ -47,12 +47,18 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label asp-for="CategoryId" class="form-label"></label>
-                        <select asp-for="CategoryId" asp-items="Model.CategoriesToSelect" class="form-select">
-                            <option value="">Selecione a categoria</option>
-                        </select>
-                        <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                    <div class="mb-3 row">
+                        <div class="col-md-6">
+                            @await Component.InvokeAsync("CategorySelect", new { selectedCategoryId = Model.CategoryId })
+                            <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6 d-flex align-items-center">
+                            <div class="form-check form-switch">
+                                <input asp-for="Active" type="checkbox" class="form-check-input" checked="@(Model.Active)" />
+                                <label asp-for="Active" class="form-check-label"></label>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mb-4">
@@ -60,9 +66,6 @@
                         <custom-file-input prop-name="NewProductImage" existing-image="@Url.Content(Model.CurrentProductImage)"></custom-file-input>
                         <span asp-validation-for="NewProductImage" class="text-danger small"></span>
                     </div>
-
-
-
 
                     <div class="mb-4">
                         <label class="form-label">Subcategorias</label>

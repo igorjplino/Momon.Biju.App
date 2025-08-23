@@ -47,16 +47,29 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
         var conditions = new List<string>();
 
         if (!string.IsNullOrWhiteSpace(filters.Name))
+        {
             conditions.Add("p.Name LIKE @Name");
+        }
+
+        if (filters.Active.HasValue)
+        {
+            conditions.Add("p.Active = @Active");
+        }
 
         if (filters.CategoryId.HasValue)
+        {
             conditions.Add("c.Id = @CategoryId");
+        }
 
         if (filters.SubCategoryId.HasValue)
+        {
             conditions.Add("psc.SubCategoryId = @SubCategoryId");
+        }
 
         if (conditions.Count > 0)
+        {
             sql.AppendLine(" WHERE " + string.Join(" AND ", conditions));
+        }
 
         sql.AppendLine(
             """
@@ -82,6 +95,7 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
             Offset = (filters.PageNumber - 1) * filters.PageSize,
             filters.PageSize,
             Name = $"%{filters.Name}%",
+            filters.Active,
             filters.CategoryId,
             filters.SubCategoryId,
         };

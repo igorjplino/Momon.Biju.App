@@ -10,6 +10,15 @@
             <input asp-for="Name" class="form-control"/>
         </div>
 
+        <div class="mb-3">
+            <label for="Active" class="form-label">Status</label>
+            <select id="Active" name="Active" class="form-select">
+                <option value="">Todos</option>
+                <option value="true" selected="@(Model.Active)">Ativos</option>
+                <option value="false" selected="@(Model.Active)">Inativos</option>
+            </select>
+        </div>
+
         <div class="mb-4">
             <label asp-for="SelectedCategoryId" class="form-label"></label>
             <select asp-for="SelectedCategoryId" asp-items="Model.Categories" class="form-select">

@@ -43,6 +43,7 @@ public class ProductController : BaseController
             pageNumber: pageNumber,
             pageSize: pageSize,
             name: filters?.Name,
+            active: filters?.Active,
             categoryId: filters?.SelectedCategoryId,
             subCategoryId: filters?.SelectedSubCategoryId
         ));
@@ -74,6 +75,7 @@ public class ProductController : BaseController
             Products = productsPaged,
             Filter = new FilterProductsInListDto
             {
+                Active = filters?.Active,
                 SelectedCategoryId = query.Filters?.CategoryId,
                 SelectedSubCategoryId = query.Filters?.SubCategoryId,
                 Categories = categories.Select(x => new SelectListItem
@@ -126,6 +128,7 @@ public class ProductController : BaseController
             vm.Description,
             vm.Price,
             vm.ReferenceNumber,
+            vm.Active,
             imagePath,
             vm.CategoryId,
             vm.SubCategories);
@@ -183,6 +186,7 @@ public class ProductController : BaseController
             Description = product.Description,
             Price = product.Price,
             ReferenceNumber = product.ReferenceNumber,
+            Active = product.Active,
             CurrentProductImage = product.ImagePath,
             CategoryId = product.CategoryId,
             SubCategories = product.SubCategories.Select(x => x.SubCategoryId),
@@ -213,6 +217,7 @@ public class ProductController : BaseController
             vm.Description,
             vm.Price,
             vm.ReferenceNumber,
+            vm.Active,
             imagePath ?? vm.CurrentProductImage,
             vm.CategoryId,
             vm.SubCategories);

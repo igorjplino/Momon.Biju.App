@@ -10,6 +10,7 @@ public record CreateProductCommand(
     string Description,
     string Price,
     string ReferenceNumber,
+    bool Active,
     string ImagePath,
     Guid CategoryId,
     IEnumerable<Guid> SubCategories)
@@ -33,6 +34,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             Description = request.Description,
             Price = Math.Round(decimal.Parse(request.Price), 2),
             ReferenceNumber = request.ReferenceNumber,
+            Active = request.Active,
             ImagePath = request.ImagePath,
             CategoryId = request.CategoryId,
             SubCategories = request.SubCategories.Select(x => new ProductSubCategory
