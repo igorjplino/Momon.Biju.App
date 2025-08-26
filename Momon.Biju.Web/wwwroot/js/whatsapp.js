@@ -2,6 +2,10 @@ $(document).ready(function () {
     $("#finish-purchase").on("submit", function (e) {
         e.preventDefault();
 
+        if (!$(this).valid()) {
+            return;
+        }
+
         $.ajax({
             url: "/Cart/Cart/FinishPurchase/",
             method: "POST",
