@@ -10,7 +10,7 @@ public class DetailsToPurchase
     public string Name { get; set; }
     [MaxLength(100)]
     [Display(Name = "Informações adicionais")]
-    public string Comments { get; set; }
+    public string AdditionalInformation { get; set; }
 
     public bool CanPurchase { get; set; }
 }

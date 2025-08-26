@@ -6,6 +6,7 @@ namespace Momon.Biju.App.Domain.Interfaces.Repositories;
 public interface IProductRepository : IBaseRepository<Product>
 {
     Task<(IEnumerable<Product> Exercises, int Total)> ListProductsAsync(ProductFilters filters);
+    Task<List<Product>> ListProductsByIdsAsync(IEnumerable<Guid> ids);
     Task<Product?> GetByNameAsync(string name);
     Task<Product?> GetToEditAsync(Guid id);
     Task<Product?> GetToDetailsAsync(Guid id);

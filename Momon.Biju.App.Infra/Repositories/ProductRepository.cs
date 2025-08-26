@@ -118,11 +118,16 @@ public class ProductRepository : BaseRepository<Product>, IProductRepository
                 Id = r.CategoryId,
                 Name = r.CategoryName
             }
-        }).ToList();
+        });
 
         var total = result.FirstOrDefault()?.Total ?? 0;
 
         return (products, total);
+    }
+
+    public async Task<List<Product>> ListProductsByIdsAsync(IEnumerable<Guid> ids)
+    {
+        return await Context.Products.Where(p => ids.Contains(p.Id)).ToListAsync();
     }
 
     public async Task<Product?> GetByNameAsync(string name)

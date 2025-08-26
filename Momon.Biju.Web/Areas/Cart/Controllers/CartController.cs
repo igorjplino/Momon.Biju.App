@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Momon.Biju.App.Application.EntitiesActions.Shop.Commands;
 using Momon.Biju.App.Domain.Interfaces.Repositories;
 using Momon.Biju.Web.Areas.Cart.Models;
 using Momon.Biju.Web.Controllers;
@@ -161,5 +162,24 @@ public class CartController : BaseController
     public IActionResult CartPurchaseTotal()
     {
         return Json(new { success = true, cartPurchaseTotal = _cartCookieManager.TotalPurchase().ToString("C") });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> FinishPurchase(DetailsToPurchase detailsToPurchase)
+    {
+        var cart = _cartCookieManager.GetCart();
+        
+        var command = new FinishPurchaseCommand(
+            detailsToPurchase.Name,
+            detailsToPurchase.AdditionalInformation,
+            cart.ToDictionary(x => x.ProductId, x => x.Quantity));
+        
+        var result = await Mediator.Send(command);
+        
+        return Json(new
+        {
+            phone = result.Value.PhoneNumber,
+            message = result.Value.OrderMesage
+        });
     }
 }

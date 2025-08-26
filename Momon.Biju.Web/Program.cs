@@ -28,6 +28,8 @@ builder.Services.AddScoped<CartCookieManager>();
 builder.Services.AddScoped<FilterProductsCookieManager>();
 
 builder.Services.Configure<Connections>(builder.Configuration.GetSection("ConnectionStrings"));
+builder.Services.Configure<OrderContentOptions>(builder.Configuration.GetSection("OrderContent"));
+
 
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
     {

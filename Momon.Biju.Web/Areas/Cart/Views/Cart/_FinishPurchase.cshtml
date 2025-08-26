@@ -1,7 +1,8 @@
+@using System.Collections.Specialized
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model Momon.Biju.Web.Areas.Cart.Models.DetailsToPurchase
 
-<form asp-action="Create" method="post" enctype="multipart/form-data">
+<form id="finish-purchase" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="mb-3">
@@ -11,16 +12,17 @@
     </div>
 
     <div class="mb-3">
-        <label asp-for="Comments" class="form-label"></label>
-        <textarea asp-for="Comments" style="resize:none;" rows="3" class="form-control" placeholder="Informação adicional"></textarea>
-        <span asp-validation-for="Comments" class="text-danger"></span>
+        <label asp-for="AdditionalInformation" class="form-label"></label>
+        <textarea asp-for="AdditionalInformation" style="resize:none;" rows="3" class="form-control" placeholder="Informação adicional"></textarea>
+        <span asp-validation-for="AdditionalInformation" class="text-danger"></span>
     </div>
-
 
     <hr />
 
     <div class="form-group">
-        <input type="submit" value="Salvar" class="btn btn-primary" />
+        <button type="submit" value="Salvar" class="btn btn-primary"></button>
     </div>
     <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+
+    <a id="whatsapp-link" target="_blank" style="display:none;"></a>
 </form>

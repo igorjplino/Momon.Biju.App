@@ -5,8 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Momon.Biju.App.Application.Common;
 using Momon.Biju.App.Application.EntitiesActions.Categories.Commands;
 using Momon.Biju.App.Application.EntitiesActions.Produtcs.Commands;
+using Momon.Biju.App.Application.EntitiesActions.Shop.Commands;
 using Momon.Biju.App.Application.EntitiesActions.SubCategories.Commands;
 using Momon.Biju.App.Domain.Entities;
+using Momon.Biju.App.Domain.Model;
 
 namespace Momon.Biju.App.Application;
 
@@ -29,6 +31,8 @@ public static class ConfigureService
             cfg.AddValidationBehavior<CreateCategoryCommand, Guid>();
             
             cfg.AddValidationBehavior<CreateSubCategoryCommand, Guid>();
+            
+            cfg.AddValidationBehavior<FinishPurchaseCommand, OrderRequest>();
         });
         
         return services;

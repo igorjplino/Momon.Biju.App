@@ -1,6 +1,6 @@
 @model Momon.Biju.Web.Areas.Cart.Models.DetailsToPurchase
 
-<form asp-area="Cart" asp-controller="Cart" asp-action="FinishPurchase" method="post">
+<form id="finish-purchase" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="mb-3">
@@ -10,9 +10,9 @@
     </div>
 
     <div class="mb-3">
-        <label asp-for="Comments" class="form-label"></label>
-        <textarea asp-for="Comments" class="form-control" rows="3" style="resize:none;"></textarea>
-        <span asp-validation-for="Comments" class="text-danger"></span>
+        <label asp-for="AdditionalInformation" class="form-label"></label>
+        <textarea asp-for="AdditionalInformation" class="form-control" rows="3" style="resize:none;"></textarea>
+        <span asp-validation-for="AdditionalInformation" class="text-danger"></span>
     </div>
 
     <hr />
@@ -25,3 +25,5 @@
         </a>
     </div>
 </form>
+
+<a id="whatsapp-link" target="_blank" style="display:none;"></a>
