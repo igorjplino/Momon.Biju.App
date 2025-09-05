@@ -1,0 +1,94 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>@ViewData["Title"] - Momon Biju</title>
+
+    <script type="importmap"></script>
+
+    <!-- Favicons -->
+    <link href="~/images/logo/logo-removebg.png" rel="icon">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="~/css/home/header.css"/>
+    <link rel="stylesheet" href="~/css/home/footer.css"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="index-page">
+<header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="logo d-flex align-items-center me-auto">
+            <img src="~/images/logo/logo-removebg.png" alt="">
+            <h1 class="sitename">Momon Bijus</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a href="#hero" class="active">Início</a></li>
+                <li><a href="about.html"><span>Sobre</span></a></li>
+                <li><a href="portfolio.html">Catálogo</a></li>
+                <li><a href="contact.html">Contatos</a></li>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none fa-solid fa-bars"></i>
+        </nav>
+
+        <a asp-area="" asp-controller="Product" asp-action="Index" class="btn-getstarted"><b>Visite nossa loja</b></a>
+    </div>
+</header>
+
+@RenderBody()
+
+<footer id="footer" class="footer dark-background">
+    <div class="container footer-top">
+        <div class="row gy-4">
+            <div class="col-lg-4 col-md-6 footer-about">
+                <a href="index.html" class="logo d-flex align-items-center">
+                    <span class="sitename">Momon Bijus</span>
+                </a>
+                <div class="footer-contact pt-3">
+                    <p>Centro</p>
+                    <p>Juazeiro-BA</p>
+                    <p class="mt-3"><strong>Whatsapp:</strong> <span>+55 74 98806-7246</span></p>
+                    <p><strong>Email:</strong> <span>mbijusmomon@gmail.com</span></p>
+                </div>
+                <div class="social-links d-flex mt-4">
+                    <a href="https://wa.me/5574988067246?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20os%20produtos."><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.facebook.com/"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-3 footer-links">
+                <h4>Links úteis</h4>
+                <ul>
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Sobre nós</a></li>
+                    <li><a href="#">Serviços</a></li>
+                    <li><a href="#">Termos de serviço</a></li>
+                    <li><a href="#">Políticas de privacidade</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/home.js" asp-append-version="true"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

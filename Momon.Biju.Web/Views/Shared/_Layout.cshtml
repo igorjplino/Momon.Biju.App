@@ -8,98 +8,154 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    
+
     <title>@ViewData["Title"] - Momon Biju</title>
-    
+
     <script type="importmap"></script>
+
+    <!-- Favicons -->
+    <link href="~/images/logo/logo-removebg.png" rel="icon">
     
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="~/css/home/header.css"/>
+    <link rel="stylesheet" href="~/css/home/footer.css"/>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap4-duallistbox/dist/bootstrap-duallistbox.min.css"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
     @await RenderSectionAsync("Styles", required: false)
 </head>
-<body class="d-flex flex-column min-vh-100">
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm px-4">
-        <div class="container-fluid">
-            
-            <a asp-area="" asp-controller="Product" asp-action="Index" class="navbar-brand fw-bold">
-                Momon Biju
-            </a>
+<body class="index-page">
+<header id="header" class="header d-flex sticky-top">
+    <div class="container-fluid container-xl d-flex justify-content-between align-items-center flex-nowrap">
 
-            <div class="d-flex">
-                @if (User.Identity is { IsAuthenticated: true })
-                {
-                    var user = await UserManager.GetUserAsync(User);
+        <a asp-controller="Home" asp-action="Index" class="logo d-flex align-items-center">
+            <img src="~/images/logo/logo-removebg.png" alt="" class="me-2" style="height:40px;">
+            <h1 class="sitename m-0">Momon Bijus</h1>
+        </a>
 
-                    <div class="d-flex align-items-center gap-3">
-                        <span class="fw-semibold">Olá, @user?.DisplayName</span>
+        @if (User.Identity is { IsAuthenticated: true })
+        {
+            var user = await UserManager.GetUserAsync(User);
 
-                        <div class="dropdown">
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                Menu
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li>
-                                    <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="dropdown-item">
-                                        <i class="bi bi-box-seam me-2"></i> Produtos
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="dropdown-item">
-                                        <i class="bi bi-tags me-2"></i> Categorias
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-area="Admin" asp-controller="SubCategory" asp-action="Index" class="dropdown-item">
-                                        <i class="bi bi-tag me-2"></i> Sub-Categorias
-                                    </a>
-                                </li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li>
-                                    <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
-                                        <button type="submit" class="dropdown-item text-danger">
-                                            <i class="bi bi-box-arrow-right me-2"></i> Logout
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <a asp-area="Cart" asp-controller="Cart" asp-action="Index" class="position-relative text-decoration-none me-3">
-                        <i class="fas fa-shopping-cart fa-lg"></i>
-                        <span id="cartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            0 <span class="visually-hidden">Produtos no carrinho</span>
-                        </span>
-                    </a>
+            <div class="d-flex align-items-center gap-3">
+                <span class="fw-semibold">Olá, @user?.DisplayName</span>
 
-                }
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        Menu
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li>
+                            <a asp-area="Admin" asp-controller="Product" asp-action="Index"
+                               class="dropdown-item">
+                                <i class="bi bi-box-seam me-2"></i> Produtos
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="Category" asp-action="Index"
+                               class="dropdown-item">
+                                <i class="bi bi-tags me-2"></i> Categorias
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="SubCategory" asp-action="Index"
+                               class="dropdown-item">
+                                <i class="bi bi-tag me-2"></i> Sub-Categorias
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li>
+                            <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
+                                <button type="submit" class="dropdown-item text-danger">
+                                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        }
+        else
+        {
+            <a asp-area="Cart" asp-controller="Cart" asp-action="Index" class="btn-shopping-cart position-relative mx-3">
+                <i class="fas fa-shopping-cart fa-xl"></i>
+                <span id="cartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-6">
+                    0 <span class="visually-hidden">Produtos no carrinho</span>
+                </span>
+            </a>
+        }
+    </div>
 </header>
+
 <div class="container mt-4">
     <main role="main" class="pb-3 flex-grow-1">
         @RenderBody()
     </main>
 </div>
 
-<footer class="footer mt-auto py-3 bg-light border-top shadow-sm">
-    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center text-muted">
-        <div>
-            &copy; 2025 <strong>Momon Biju</strong>. Todos os direitos reservados.
+<footer id="footer" class="footer dark-background">
+
+    <div class="container footer-top">
+        <div class="row gy-4">
+            <div class="col-lg-4 col-md-6 footer-about">
+                <a href="index.html" class="logo d-flex align-items-center">
+                    <span class="sitename">Momon Bijus</span>
+                </a>
+                <div class="footer-contact pt-3">
+                    <p>Centro</p>
+                    <p>Juazeiro-BA</p>
+                    <p class="mt-3"><strong>Whatsapp:</strong> <span>+55 74 98806-7246</span></p>
+                    <p><strong>Email:</strong> <span>mbijusmomon@gmail.com</span></p>
+                </div>
+                <div class="social-links d-flex mt-4">
+                    <a href="https://wa.me/5574988067246?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20os%20produtos."><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.facebook.com/"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-3 footer-links">
+                <h4>Links úteis</h4>
+                <ul>
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Sobre nós</a></li>
+                    <li><a href="#">Serviços</a></li>
+                    <li><a href="#">Termos de serviço</a></li>
+                    <li><a href="#">Políticas de privacidade</a></li>
+                </ul>
+            </div>
+
+            @* <div class="col-lg-4 col-md-12 footer-newsletter"> *@
+            @*     <h4>Fique por dentro das nossas novidades!</h4> *@
+            @*     <p>Assine nossa newsletter e receba as últimas novidades sobre nossos produtos e serviços!</p> *@
+            @*     <form action="forms/newsletter.php" method="post" class="php-email-form"> *@
+            @*         <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div> *@
+            @*         <div class="loading">Loading</div> *@
+            @*         <div class="error-message"></div> *@
+            @*         <div class="sent-message">Sua solicitação de inscrição foi enviada. Obrigado!</div> *@
+            @*     </form> *@
+            @* </div> *@
+
         </div>
-        @* <div> *@
-        @*     <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none text-muted me-3">Política de Privacidade</a> *@
-        @*     <a href="mailto:contato@momon.biju" class="text-decoration-none text-muted">Contato</a> *@
-        @* </div> *@
     </div>
+
+    @* <div class="container copyright text-center mt-4"> *@
+    @*     <p>© <span>Copyright</span> <strong class="px-1 sitename">Sailor</strong> <span>All Rights Reserved</span></p> *@
+    @*     <div class="credits"> *@
+    @* *@
+    @*         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> *@
+    @*     </div> *@
+    @* </div> *@
+
 </footer>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

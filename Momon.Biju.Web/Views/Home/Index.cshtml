@@ -1,8 +1,427 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+@{
+    ViewData["Title"] = "Bem-vindo";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/home/home.css"/>
+    <link rel="stylesheet" href="~/css/home/testimonials.css"/>
+    <link rel="stylesheet" href="~/css/home/hero.css"/>
+    <link rel="stylesheet" href="~/css/home/portifolio.css"/>
+    <link rel="stylesheet" href="~/css/home/services.css"/>
+    <link rel="stylesheet" href="~/css/home/about.css"/>
+}
+
+<main class="main">
+    
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background">
+
+        <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+
+            <div class="carousel-item active">
+                <img src="https://www.babygold.com/cdn/shop/files/Best-Sellers-NAV.jpg?crop=center&height=363&v=1700335892&width=519" alt="">
+                <div class="carousel-container">
+                    <h2>Bem-vindo à Momon.Bijus<br></h2>
+                    <p>Nosso propósito é valorizar seus momentos, sua identidade, estilo e beleza única.</p>
+                    <a href="about.html" class="btn-get-started">Conheça mais</a>
+                </div>
+            </div><!-- End Carousel Item -->
+
+            <div class="carousel-item">
+                <img src="https://eu.astridandmiyu.com/cdn/shop/collections/TwlightNecklaceGold1.jpg?v=1709217446&width=700" alt="">
+                <div class="carousel-container">
+                    <h2>Nunca duvide do seu brilho</h2>
+                    <p>Peças delicadas e sofisticadas para toda mulher brilhar</p>
+                    <a href="portfolio.html" class="btn-get-started">Catálogo</a>
+                </div>
+            </div><!-- End Carousel Item -->
+
+            <div class="carousel-item">
+                <img src="https://www.astleyclarke.com/media/wysiwyg/gold_4.jpg" alt="">
+                <div class="carousel-container">
+                    <h2>Nova coleção</h2>
+                    <p>Conheça as nossas peças</p>
+                    <a href="portfolio.html" class="btn-get-started">Catálogo</a>
+                </div>
+            </div><!-- End Carousel Item -->
+
+            <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+            </a>
+
+            <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+            </a>
+
+            <ol class="carousel-indicators"></ol>
+
+        </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Portfolio</h2>
+            <p>Nossos acessórios
+            </p>
+        </div><!-- End Section Title -->
+
+        <div class="container">
+
+            <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+                <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+                    <li data-filter="*" class="filter-active">Tudo</li>
+                    <li data-filter=".filter-anel">Anéis</li>
+                    <li data-filter=".filter-brinco">Brincos</li>
+                    <li data-filter=".filter-colar">Colares</li>
+                    <li data-filter=".filter-conjuntos">Conjuntos</li>
+                </ul><!-- End Portfolio Filters -->
+
+                <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-anel">
+                        <img src="assets/img/produtos/anel/Anel com Fios Vazados Regulável .JPG" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Ref.: ANE1</h4>
+                            <p>Anel com fios vazados regulável</p>
+                            <p>R$ 69,90</p>
+                            <a href="assets/img/produtos/anel/Anel com Fios Vazados Regulável .JPG" title="1" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-conjuntos">
+                        <img src="assets/img/produtos/conjuntos/Conjunto Borboleta Zircônias Coloridas.JPG" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Ref.: 2554</h4>
+                            <p>Conjunto Borboleta Zircônia</p>
+                            <p>R$ 26,90</p>
+                            <a href="assets/img/produtos/conjuntos/Conjunto Borboleta Zircônias Coloridas.JPG" title="Product 1" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-brinco">
+                        <img src="assets/img/produtos/brinco/Brinco Orgânico Martelado.JPG" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Ref.: 254</h4>
+                            <p>Brinco Orgânico Martelado</p>
+                            <p>R$ 22,90</p>
+                            <a href="assets/img/produtos/brinco/Brinco Orgânico Martelado.JPG" title="Branding 1" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-anel">
+                        <img src="assets/img/produtos/anel/ANEL ESTRELA DO MAR REGULÁVEL.JPG" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Ref.:2549</h4>
+                            <p>Anel estrela do mar regulável</p>
+                            <p>R$ 19,90</p>
+                            <a href="assets/img/produtos/anel/ANEL ESTRELA DO MAR REGULÁVEL.JPG" title="App 2" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-conjuntos">
+                        <img src="assets/img/produtos/conjuntos/Conjunto Choker Aro e Brinco Coração Zircônias.JPG" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Ref.: 456</h4>
+                            <p>Chocker Aro e Brinco Coração</p>
+                            <p>R$ 35,90</p>
+                            <a href="assets/img/produtos/conjuntos/Conjunto Choker Aro e Brinco Coração Zircônias.JPG" title="Product 2" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-brinco">
+                        <img src="assets/img/produtos/brinco/Brinco Coração Resinado Verde.JPG" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Ref.: 154</h4>
+                            <p>Brinco Coração Resinado Verde</p>
+                            <p>R$ 29,90</p>
+                            <a href="assets/img/produtos/brinco/Brinco Coração Resinado Verde.JPG" title="Branding 2" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-conjuntos">
+                        <img src="assets/img/produtos/conjuntos/Conjunto Choker e Bracelete Aro Bella.jpg" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Ref.: 0121</h4>
+                            <p>Conjunto Choker e Bracelte Aro Bella</p>
+                            <p>R$ 24,90</p>
+                            <a href="assets/img/produtos/conjuntos/Conjunto Choker e Bracelete Aro Bella.jpg" title="App 3" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-anel">
+                        <img src="assets/img/produtos/anel/Anel Inspiração Vg. Borda com Zircônias Tam 20.JPG" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Ref.:789</h4>
+                            <p>Anel Inspiração Vg. Borda com Zircônias</p>
+                            <p>R$ 29,90</p>
+                            <a href="assets/img/produtos/anel/Anel Inspiração Vg. Borda com Zircônias Tam 20.JPG" title="Product 3" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-brincos">
+                        <img src="assets/img/produtos/brinco/Brinco Bolinha Tripla.JPG" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Ref.: 986</h4>
+                            <p>Brinco Bolinha Tripla</p>
+                            <p>R$ 39,90</p>
+                            <a href="assets/img/produtos/brinco/Brinco Bolinha Tripla.JPG" title="Branding 2" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-conjuntos">
+                        <img src="assets/img/produtos/conjuntos/Conjunto de Colar e Brinco Aspas.JPG" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Ref.: 986</h4>
+                            <p>Conjunto Aspas</p>
+                            <p>R$ 39,90</p>
+                            <a href="assets/img/produtos/conjuntos/Conjunto de Colar e Brinco Aspas.JPG" title="Branding 2" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-brinco">
+                        <img src="assets/img/produtos/brinco/Brinco Gota Gordinha Banho Prata.JPG" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Ref.: 986</h4>
+                            <p>Brinco Gota Prata</p>
+                            <p>R$ 39,90</p>
+                            <a href="assets/img/produtos/brinco/Brinco Gota Gordinha Banho Prata.JPG" title="Branding 2" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                            <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Portfolio Item -->
+
+
+                </div><!-- End Portfolio Container -->
+
+            </div>
+
+        </div>
+
+    </section><!-- /Portfolio Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Sobre</h2>
+            <p>Momon.Bijus<br></p>
+        </div><!-- End Section Title -->
+
+        <div class="container">
+
+            <div class="row gy-4">
+
+                <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+                    <p>
+                        A Momon.Bijus é um e-commerce, vendedora on-line de semi-joias (banho 5 a 10 mil) , peças folheadas (banho prata 8 mil )e no ouro 18k (banho 2 a 4mil), pratas 925 e acessórios com design moderno.
+
+                    </p>
+                    <ul>
+                        <li><i class="bi bi-check2-circle"></i> <span>A entrega é imediata (Juazeiro-BA e Petrolina-PE).</span></li>
+                        <li><i class="bi bi-check2-circle"></i> <span>Opção de pagamento pelo whatsapp (Pix).</span></li>
+                        <li><i class="bi bi-check2-circle"></i> <span>Segunda à sábado, de 9h às 13h e das 15h às 19h.</span></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                    <p>
+                        Nunca duvide do seu brilho.</p>
+                    <a href="about.html" class="read-more"><span>Leia mais</span><i class="bi bi-arrow-right"></i></a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section><!-- /About Section -->
+    
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials section">
+
+        <div class="container">
+
+            <div class="row gy-4">
+
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-item">
+                        <h3>Luíza Santos</h3>
+                        <h4>Juazeiro-BA</h4>
+                        <div class="stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                        <p>
+                            <i class="bi bi-quote quote-icon-left"></i>
+                            <span>Fui muito bem atendida! As peças chegaram no mesmo dia e são ainda mais bonitas pessoalmente.</span>
+                            <i class="bi bi-quote quote-icon-right"></i>
+                        </p>
+                    </div>
+                </div><!-- End testimonial item -->
+
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-item">
+                        <h3>Jéssica Simone</h3>
+                        <h4>Petrolina-PE</h4>
+                        <div class="stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                        <p>
+                            <i class="bi bi-quote quote-icon-left"></i>
+                            <span>Adorei o atendimento, rápido e super educado. As bijus têm um brilho incrível!</span>
+                            <i class="bi bi-quote quote-icon-right"></i>
+                        </p>
+                    </div>
+                </div><!-- End testimonial item -->
+
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="testimonial-item">
+                        <h3>Manoela Martins</h3>
+                        <h4>Juazeiro-BA</h4>
+                        <div class="stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                        <p>
+                            <i class="bi bi-quote quote-icon-left"></i>
+                            <span>Comprei pelo WhatsApp, paguei no Pix e recebi tudo certinho. Muito prático!</span>
+                            <i class="bi bi-quote quote-icon-right"></i>
+                        </p>
+                    </div>
+                </div><!-- End testimonial item -->
+
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="testimonial-item">
+                        <h3>Bruna Silva</h3>
+                        <h4>Juazeiro-BA</h4>
+                        <div class="stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                        <p>
+                            <i class="bi bi-quote quote-icon-left"></i>
+                            <span>As peças são lindas e de ótima qualidade. Atendimento nota 10!</span>
+                            <i class="bi bi-quote quote-icon-right"></i>
+                        </p>
+                    </div>
+                </div><!-- End testimonial item -->
+
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="testimonial-item">
+                        <h3>Priscylla Oliveira</h3>
+                        <h4>Petrolina-PE</h4>
+                        <div class="stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                        <p>
+                            <i class="bi bi-quote quote-icon-left"></i>
+                            <span>Entrega super rápida aqui em Petrolina. Atendimento atencioso do início ao fim.</span>
+                            <i class="bi bi-quote quote-icon-right"></i>
+                        </p>
+                    </div>
+                </div><!-- End testimonial item -->
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="testimonial-item">
+                        <h3>Rayza Menezes</h3>
+                        <h4>Juazeiro-BA</h4>
+                        <div class="stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                        <p>
+                            <i class="bi bi-quote quote-icon-left"></i>
+                            <span>Fiquei encantada com o cuidado em cada detalhe. Já quero comprar mais!</span>
+                            <i class="bi bi-quote quote-icon-right"></i>
+                        </p>
+                    </div>
+                </div><!-- End testimonial item -->
+
+            </div>
+
+        </div>
+
+    </section><!-- /Testimonials Section -->
+    
+    <!-- Services Section -->
+    <section id="services" class="services section">
+
+        <div class="container">
+
+            <div class="row gy-4">
+
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-item d-flex position-relative h-100">
+                        <i class="bi bi-briefcase icon flex-shrink-0"></i>
+                        <div>
+                            <h4 class="title"><a href="#" class="stretched-link">Atendimento</a></h4>
+                            <p class="description">Cuidamos de cada detalhe, inclusive de você</p>
+                        </div>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-item d-flex position-relative h-100">
+                        <i class="bi bi-card-checklist icon flex-shrink-0"></i>
+                        <div>
+                            <h4 class="title"><a href="#" class="stretched-link">Missão</a></h4>
+                            <p class="description"> Acreditamos que cada mulher é única e merece se sentir especial. Por isso, oferecemos uma variedade de acessórios que refletem a sua personalidade e estilo.</p>
+                        </div>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-item d-flex position-relative h-100">
+                        <i class="bi bi-bar-chart icon flex-shrink-0"></i>
+                        <div>
+                            <h4 class="title"><a href="#" class="stretched-link">Visão</a></h4>
+                            <p class="description">Ser referência em bijuterias autorais, reconhecida por qualidade, estilo e atendimento próximo.</p>
+                        </div>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-item d-flex position-relative h-100">
+                        <i class="bi bi-binoculars icon flex-shrink-0"></i>
+                        <div>
+                            <h4 class="title"><a href="#" class="stretched-link">Propósito</a></h4>
+                            <p class="description">Nosso propósito é valorizar seus momentos, sua identidade, estilo e beleza única.</p>
+                        </div>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="service-item d-flex position-relative h-100">
+                        <i class="bi bi-brightness-high icon flex-shrink-0"></i>
+                        <div>
+                            <h4 class="title"><a href="#" class="stretched-link">Autoexpressão</a></h4>
+                            <p class="description">Nossas peças são para empoderar — cada bijuteria é um reflexo do estilo e da identidade de quem a escolhe.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section><!-- /Services Section -->
+    
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+        <i class="fa-solid fa-arrow-up"></i>
+    </a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+</main>
