@@ -30,7 +30,7 @@
 .header .btn-getstarted:focus {
     color: var(--contrast-color);
     background: var(--accent-color);
-    font-size: 0.8rem;
+    font-size: 1rem;
     padding: 8px 25px;
     margin: 0 0 0 30px;
     border-radius: 4px;

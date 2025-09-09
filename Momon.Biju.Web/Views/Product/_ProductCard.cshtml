@@ -20,18 +20,18 @@
                 </small>
 
                 <!-- Price -->
-                <span class="fw-bold text-primary" style="font-size: 1.1rem;">
+                <h6 class="fw-bold">
                     R$ @Model.Price
-                </span>
+                </h6>
             </div>
 
         </div>
 
-        <div class="mt-2 d-flex gap-2">
-            <a onclick="addToCart('@Model.Id')" class="btn btn-sm btn-outline-primary w-100" tooltips="Adicionar ao carrinho">
+        <div class="mt-2 d-flex justify-content-between gap-2">
+            <a onclick="addToCart('@Model.Id')" class="btn btn-sm w-100 btn-outline-custom" tooltips="Adicionar ao carrinho">
                 <i class="fa fa-cart-plus me-1"></i>
             </a>
-            <a asp-controller="Product" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-sm btn-primary w-100">
+            <a asp-controller="Product" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-sm w-100 btn-submit">
                 Detalhes
             </a>
         </div>

@@ -1,0 +1,26 @@
+/* ===== Global Pink Pagination Colors ===== */
+.pagination .page-link {
+    color: #e83e8c;              /* normal text + border color */
+    border: 1px solid #e83e8c;
+    background-color: transparent;
+    transition: all .2s ease-in-out;
+}
+
+.pagination .page-link:hover {
+    background-color: #e83e8c;
+    color: #fff;
+    border-color: #e83e8c;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #e83e8c;
+    border-color: #e83e8c;
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #adb5bd;              /* light gray for disabled */
+    background-color: transparent;
+    border-color: #e83e8c;
+    pointer-events: none;
+}

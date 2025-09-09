@@ -1,0 +1,80 @@
+/* Pink-themed table */
+.table-pink {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table-pink th {
+    background-color: #e83e8c;       /* Pink header */
+    color: #fff;                     /* White text */
+    border-bottom: 2px solid #d63384; /* Slightly darker pink border */
+}
+
+.table-pink thead th {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.table-pink tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.table-pink tbody tr:nth-child(odd) {
+    background-color: #ffe6f0;       /* Light pink stripe */
+}
+
+.table-pink tbody tr:hover {
+    background-color: #ffc0da;       /* Slightly darker pink on hover */
+}
+
+.table-pink td, .table-pink th {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+    border-top: 1px solid #f5c6e0;   /* Soft border between rows */
+}
+
+.table-pink a {
+    color: #e83e8c;
+    text-decoration: none;
+}
+
+.table-pink a:hover {
+    color: #d63384;                   /* Darker pink on hover */
+    text-decoration: underline;
+}
+
+/* Buttons inside the table (quantity + remove) */
+.table-pink .btn-outline-secondary {
+    color: #e83e8c;
+    border-color: #e83e8c;
+    background-color: transparent;
+    transition: all 0.2s;
+}
+
+.table-pink .btn-outline-secondary:hover {
+    background-color: #e83e8c;
+    color: #fff;
+    border-color: #e83e8c;
+}
+
+.table-pink .btn-outline-danger {
+    border-color: #e83e8c;
+    color: #e83e8c;
+    background-color: transparent;
+    transition: all 0.2s;
+}
+
+.table-pink .btn-outline-danger:hover {
+    background-color: #e83e8c;
+    color: #fff;
+    border-color: #e83e8c;
+}
+
+/* Center & right align tweaks (optional, for better spacing) */
+.table-pink .text-center {
+    text-align: center;
+}
+
+.table-pink .text-end {
+    text-align: right;
+}

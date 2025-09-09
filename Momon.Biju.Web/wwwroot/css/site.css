@@ -10,8 +10,8 @@
 :root {
   --background-color: #ffffff; /* Background color for the entire website, including individual sections */
   --default-color: #444444; /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #ff0198; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #ff0198; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --heading-color: #e83e8c; /* Color for headings, subheadings and title throughout the website */
+  --accent-color: #e83e8c; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
   --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
@@ -21,9 +21,15 @@
   --nav-color: #556270;  /* The default color of the main navmenu links */
   --nav-hover-color: #00b27a; /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
-  --nav-dropdown-background-color: #ff0198; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
+  --nav-dropdown-background-color: #e83e8c; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
   --nav-dropdown-color: #556270; /* Used for navigation links of the dropdown items in the navigation menu. */
   --nav-dropdown-hover-color: #00b27a; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+}
+
+/* Buttons */
+:root {
+  --btn-outline-color: #e83e8c; /* default border/text color (like Bootstrap primary) */
+  --btn-outline-focus: rgba(13,110,253,0.25); /* focus shadow color */
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
@@ -50,9 +56,21 @@
 # General Styling & Shared Classes
 --------------------------------------------------------------*/
 body {
+  height: 100%;          /* allow full-height layout */
+  margin: 0;
   color: var(--default-color);
   background-color: var(--background-color);
   font-family: var(--default-font), serif;
+}
+
+.page-wrapper {
+  min-height: 80vh;     /* at least full viewport */
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;               /* take remaining space */
 }
 
 a {
@@ -66,7 +84,7 @@ a:hover {
   text-decoration: none;
 }
 
-h1{
+h1 {
   color: var(--heading-color);
   font-family: var(--logo-font), serif;
 }
@@ -90,3 +108,47 @@ h6 {
   color: var(--contrast-color);
   background: color-mix(in srgb, var(--accent-color), transparent 15%);
 }
+
+/* Outline button with customizable color */
+.btn-outline-custom {
+  display: inline-block;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .375rem;
+  border: 1px solid var(--btn-outline-color);
+  color: var(--btn-outline-color);
+  background-color: transparent;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s;
+  -webkit-appearance: none;
+}
+
+/* Hover / active: filled with accent color and white text */
+.btn-outline-custom:hover,
+.btn-outline-custom:active {
+  background-color: var(--btn-outline-color);
+  color: #ffffff;
+  border-color: var(--btn-outline-color);
+}
+
+/* Focus style */
+.btn-outline-custom:focus {
+  outline: none;
+  box-shadow: 0 0 0 .25rem var(--btn-outline-focus);
+}
+
+/* Disabled */
+.btn-outline-custom:disabled,
+.btn-outline-custom.disabled {
+  opacity: .65;
+  pointer-events: none;
+  background-color: transparent;
+  color: var(--btn-outline-color);
+  border-color: var(--btn-outline-color);
+}
+
+

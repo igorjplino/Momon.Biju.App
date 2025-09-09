@@ -22,7 +22,7 @@
 
 <div class="row">
 
-    <h1 class="mb-4">@Model.Name</h1>
+    <h2 class="mb-4">@Model.Name</h2>
     
     <div class="col-md-4">
         <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid mb-3" style="max-width: 100%;"/>
@@ -41,13 +41,13 @@
                     <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-control"/>
                 </div>
                 <div class="col-auto">
-                    <button onclick="addToCartWithQuantity('@Model.Id')" class="btn btn-primary">Adicionar ao carrinho</button>
+                    <button onclick="addToCartWithQuantity('@Model.Id')" class="btn btn-submit">Adicionar ao carrinho</button>
                 </div>
             </div>
         </div>
 
         <div class="mt-auto">
-            <a asp-controller="Product" asp-action="Index" class="btn btn-secondary">Continuar a comprar</a>
+            <a asp-controller="Product" asp-action="Index" class="btn btn-outline-custom">Voltar a loja</a>
         </div>
     </div>
 </div>

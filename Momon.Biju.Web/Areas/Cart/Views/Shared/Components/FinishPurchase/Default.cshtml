@@ -20,7 +20,7 @@
     <div class="d-grid gap-2">
         <input type="submit" value="Finalizar a compra" class="btn btn-success" @(@Model.CanPurchase ? "" : "disabled") />
 
-        <a asp-controller="Product" asp-action="Index" class="btn btn-sm btn-outline-primary">
+        <a asp-area="" asp-controller="Product" asp-action="Index" class="btn btn-sm btn-outline-custom">
             <i class="bi bi-arrow-left-circle"></i> Continuar comprando
         </a>
     </div>

@@ -6,26 +6,28 @@
     Layout = "_Layout";
 }
 
-<div class="container">
-    <h2 class="mb-4 text-primary">Seu carrinho de compras</h2>
+@section Styles {
+    <link rel="stylesheet" href="~/css/cart-table.css" />
+}
 
-    <div class="row g-4">
-        <div class="col-lg-8">
-            <div id="cartItemsContainer" class="table-responsive mb-4">
-                @await Html.PartialAsync("_CartItemsList", Model.Items)
-            </div>
+<h2 class="mb-4">Seu carrinho de compras</h2>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div id="cartItemsContainer" class="table-responsive mb-4">
+            @await Html.PartialAsync("_CartItemsList", Model.Items)
         </div>
+    </div>
 
-        <div class="col-lg-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Resumo da compra</h5>
-                    <p class="card-text text-muted mb-4">
-                        Informe seus dados para concluir a compra
-                    </p>
+    <div class="col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Resumo da compra</h5>
+                <p class="card-text text-muted mb-4">
+                    Informe seus dados para concluir a compra
+                </p>
 
-                    @await Component.InvokeAsync("FinishPurchase", new DetailsToPurchase { CanPurchase = Model.Items.Any()})
-                </div>
+                @await Component.InvokeAsync("FinishPurchase", new DetailsToPurchase { CanPurchase = Model.Items.Any()})
             </div>
         </div>
     </div>
