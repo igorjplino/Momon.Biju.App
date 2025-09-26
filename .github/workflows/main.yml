@@ -1,0 +1,29 @@
+name: Publish 🚀
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubunt-latest
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Restore
+      run: dotnet restore ./Momon.Biju.App.sln
+
+    - name: Build
+      run:  dotnet build ./Momon.Biju.App.sln --configuration Release --no-restore
+
+    - name: Publish
+      run: dotnet publish ./Momon.Biju.App.sln --configuration Release --no-build
